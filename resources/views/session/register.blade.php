@@ -3,19 +3,18 @@
 @section('content')
 
   <section class="min-vh-100 mb-8">
-    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 mx-3 border-radius-lg" style="background-image: url('../assets/img/curved-images/curved14.jpg');">
-      <span class="mask bg-gradient-dark opacity-6"></span>
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-5 text-center mx-auto">
-            <h1 class="text-white mb-2 mt-5">Welcome!</h1>
-            <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p>
-          </div>
-        </div>
-      </div>
+    <div class="page-header align-items-start min-vh-75 pt-5 pb-11 mx-3 border-radius-lg" style="background-image: url('../assets/img/iscp_enroll.jpg'); background-size: cover;">
+        {{-- <div class="page-header align-items-start">
+            <video id="myVideo" autoplay loop muted playsinline>
+              <source src="../assets/vid/iscp_intro.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div> --}}
+      <span class="mask bg-gradient-dark opacity-3"></span>
+
     </div>
     <div class="container">
-      <div class="row mt-lg-n10 mt-md-n11 mt-n10">
+      <div class="row mt-lg-n10 mt-md-n11 mt-n20">
         <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
           <div class="card z-index-0">
             <div class="card-header text-center pt-4">
@@ -106,6 +105,19 @@
       </div>
     </div>
   </section>
+  <script>
+    // Get the video element
+    var video = document.getElementById("myVideo");
 
+    // Function to unmute the video on user interaction
+    function unmuteVideo() {
+      video.muted = false;
+      // Remove the event listener to prevent multiple executions
+      document.removeEventListener("click", unmuteVideo);
+    }
+
+    // Add a click event listener to the document
+    document.addEventListener("click", unmuteVideo);
+  </script>
 @endsection
 
