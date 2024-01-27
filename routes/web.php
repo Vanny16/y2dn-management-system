@@ -64,6 +64,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/user-profile', [InfoUserController::class, 'create']);
 	Route::post('/user-profile', [InfoUserController::class, 'store']);
+	Route::get('/enroll_student', [InfoUserController::class, 'enroll_student']);
+	Route::post('/save_enrollee', [InfoUserController::class, 'save_enrollee']);
+
+
     Route::get('/login', function () {
 		return view('dashboard');
 	})->name('sign-up');
@@ -86,3 +90,4 @@ Route::group(['middleware' => 'guest'], function () {
 Route::get('/login', function () {
     return view('session/login-session');
 })->name('login');
+
