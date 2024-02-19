@@ -13,81 +13,267 @@
                 <form action="/save_enrollee" method="POST" role="form text-left">
                     @csrf
                     @if($errors->any())
-                        <div class="mt-3  alert alert-primary alert-dismissible fade show" role="alert">
+                        <!-- Error message display -->
+                        <div class="mt-3 alert alert-primary alert-dismissible fade show" role="alert">
                             <span class="alert-text text-white">
-                            {{$errors->first()}}</span>
+                                {{$errors->first()}}
+                            </span>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                                 <i class="fa fa-close" aria-hidden="true"></i>
                             </button>
                         </div>
                     @endif
                     @if(session('success'))
-                        <div class="m-3  alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
+                        <!-- Success message display -->
+                        <div class="m-3 alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
                             <span class="alert-text text-white">
-                            {{ session('success') }}</span>
+                                {{ session('success') }}
+                            </span>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                                 <i class="fa fa-close" aria-hidden="true"></i>
                             </button>
                         </div>
                     @endif
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
+                            <!-- Student ID field -->
                             <div class="form-group">
-                                <label for="user-name" class="form-control-label">{{ __('Full Name') }}</label>
-                                <div class="@error('user.name')border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="text" placeholder="Name" id="user-name" name="name">
-                                        @error('name')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
+                                <label for="student-id" class="form-control-label">{{ __('Student ID') }}</label>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="generateStudentID()">Generate</button>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="user-email" class="form-control-label">{{ __('Email') }}</label>
-                                <div class="@error('email')border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="email" placeholder="@example.com" id="user-email" name="email">
-                                        @error('email')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
+                                <div class="input-group">
+                                    <input class="form-control" type="text" id="student-id" name="student_id" readonly>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <!-- First Column - Last Name -->
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="user.phone" class="form-control-label">{{ __('Phone') }}</label>
-                                <div class="@error('user.phone')border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="tel" placeholder="40770888444" id="number" name="phone" value="{{ auth()->user()->phone }}">
-                                        @error('phone')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
+                                <label for="last-name" class="form-control-label">{{ __('Last Name') }}</label>
+                                <div class="@error('last_name') border border-danger rounded-3 @enderror">
+                                    <input class="form-control" type="text" placeholder="Last Name" id="last-name" name="last_name">
+                                    @error('last_name')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <!-- Second Column - First Name -->
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="user.location" class="form-control-label">{{ __('Location') }}</label>
-                                <div class="@error('user.location') border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="text" placeholder="Location" id="name" name="location">
+                                <label for="first-name" class="form-control-label">{{ __('First Name') }}</label>
+                                <div class="@error('first_name') border border-danger rounded-3 @enderror">
+                                    <input class="form-control" type="text" placeholder="First Name" id="first-name" name="first_name">
+                                    @error('first_name')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Third Column - Middle Name -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="middle-name" class="form-control-label">{{ __('Middle Name') }}</label>
+                                <div class="@error('middle_name') border border-danger rounded-3 @enderror">
+                                    <input class="form-control" type="text" placeholder="Middle Name" id="middle-name" name="middle_name">
+                                    @error('middle_name')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="about">{{ 'About Me' }}</label>
-                        <div class="@error('user.about')border border-danger rounded-3 @enderror">
-                            <textarea class="form-control" id="about" rows="3" placeholder="Say something about yourself" name="about_me"></textarea>
+                    <div class="row">
+                        <!-- First Column - Gender -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="gender" class="form-control-label">{{ __('Gender') }}</label>
+                                <div class="@error('gender') border border-danger rounded-3 @enderror">
+                                    <select class="form-control" id="gender" name="gender">
+                                        <option value="" disabled selected>Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                    @error('gender')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Second Column - Mobile Number -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="mobile-number" class="form-control-label">{{ __('Mobile Number') }}</label>
+                                <div class="@error('mobile_number') border border-danger rounded-3 @enderror">
+                                    <input class="form-control" type="text" pattern="9[0-9]{0,9}" placeholder="9123456789" id="mobile-number" name="mobile_number" required>
+                                    @error('mobile_number')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Third Column - Email -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="email" class="form-control-label">{{ __('Email') }}</label>
+                                <div class="@error('email') border border-danger rounded-3 @enderror">
+                                    <input class="form-control" type="email" placeholder="user@example.com" id="email" name="email" required>
+                                    @error('email')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!-- Address row -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="address" class="form-control-label">{{ __('Address') }}</label>
+                                <div class="@error('address') border border-danger rounded-3 @enderror">
+                                    <input class="form-control" type="text" placeholder="123 Main St, Province, City" id="address" name="address" required>
+                                    @error('address')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Department and Program row -->
+                    <div class="row">
+                        <!-- First Column - Department -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="department" class="form-control-label">{{ __('Department') }}</label>
+                                <div class="@error('department') border border-danger rounded-3 @enderror">
+                                    <select class="form-control w-100" id="department" name="department" onchange="updateProgramOptions()">
+                                        <option value="" disabled selected>Select Department</option>
+                                        <option value="accounting">College of Accounting Education</option>
+                                        <option value="architecture">College of Architecture and Fine Arts Education</option>
+                                        <option value="arts">College of Arts and Sciences</option>
+                                        <option value="business">College of Business Administration</option>
+                                        <option value="computing">College of Computing Education</option>
+                                        <option value="criminal_justice">College of Criminal Justice</option>
+                                    </select>
+                                    @error('department')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Second Column - Program -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="program" class="form-control-label">{{ __('Program') }}</label>
+                                <div class="@error('program') border border-danger rounded-3 @enderror">
+                                    <select class="form-control w-100" id="program" name="program">
+                                        <option value="" disabled selected>Select Program</option>
+                                        <!-- Program options will be dynamically updated using JavaScript -->
+                                    </select>
+                                    @error('program')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Your other form fields... -->
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+
+<script>
+    function generateStudentID() {
+        // Generate a random 6-digit number
+        var randomID = Math.floor(100000 + Math.random() * 900000);
+        
+        // Set the generated ID in the input field
+        document.getElementById('student-id').value = randomID;
+    }
+</script>
+
+<script>
+    function updateProgramOptions() {
+        const departmentSelect = document.getElementById('department');
+        const programSelect = document.getElementById('program');
+        const selectedDepartment = departmentSelect.value;
+
+        // Clear previous options
+        programSelect.innerHTML = '<option value="" disabled selected>Select Program</option>';
+
+        // Add options based on the selected department
+        switch (selectedDepartment) {
+            case 'accounting':
+                addProgramOption('Bachelor of Science in Accountancy');
+                addProgramOption('Bachelor of Science in Accounting Technology');
+                addProgramOption('Bachelor of Science in Accounting Information System');
+                addProgramOption('Bachelor of Science in Internal Auditing');
+                addProgramOption('Bachelor of Science in Management Accounting');
+                break;
+            case 'architecture':
+                addProgramOption('Bachelor of Science in Architecture');
+                addProgramOption('Bachelor of Fine Arts and Design');
+                break;
+            case 'arts':
+                addProgramOption('Bachelor of Arts in Communications');
+                addProgramOption('Bachelor of Science in Forestry');
+                addProgramOption('Bachelor of Science in Agroforestry');
+                addProgramOption('Bachelor of Science in Environmental Science');
+                addProgramOption('Bachelor of Science in Mathematics');
+                addProgramOption('Bachelor of Arts in Journalism');
+                addProgramOption('Bachelor of Arts in Broadcasting');
+                addProgramOption('Bachelor of Arts in Political Science');
+                addProgramOption('Bachelor of Science in Psychology');
+                addProgramOption('Bachelor of Science in Social Work');
+                addProgramOption('Bachelor of Science in Biology with Specializations in Plant Biology');
+                addProgramOption('Bachelor of Science in Biology with Specializations in Ecology');
+                addProgramOption('Bachelor of Arts in English Language');
+                break;
+            case 'business':
+                addProgramOption('Bachelor of Science in Entrepreneurship');
+                addProgramOption('Bachelor of Science in Legal Management');
+                addProgramOption('Bachelor of Science in Real Estate Management');
+                addProgramOption('Bachelor of Science in Business Administration – Business Economics');
+                addProgramOption('Bachelor of Science in Business Administration – Financial Management');
+                addProgramOption('Bachelor of Science in Business administration – Human Resource Management');
+                addProgramOption('Bachelor of Science in Business Administration – Marketing Management');
+                addProgramOption('Bachelor of Science in Business Administration – Business Analytics');
+                break;
+            case 'computing':
+                addProgramOption('Bachelor of Science in Information Technology');
+                addProgramOption('Bachelor of Science in Computer Science');
+                addProgramOption('Bachelor of Science in Information Systems');
+                addProgramOption('Bachelor of Library and Information Science');
+                addProgramOption('Bachelor of Science in Entertainment and Multimedia Computing – Digital Animation');
+                addProgramOption('Bachelor of Science in Entertainment and Multimedia Computing – Game Development');
+                addProgramOption('Bachelor of Arts in Multimedia Arts');
+                break;
+            case 'criminal_justice':
+                addProgramOption('Bachelor of Science in Criminology');
+                addProgramOption('Bachelor of Science in Industrial Security Management');
+                break;
+            default:
+                break;
+        }
+    }
+
+    function addProgramOption(program) {
+        const programSelect = document.getElementById('program');
+        const option = document.createElement('option');
+        option.value = program.toLowerCase().replace(/ /g, '_');
+        option.textContent = program;
+        programSelect.appendChild(option);
+    }
+</script>
+
+
