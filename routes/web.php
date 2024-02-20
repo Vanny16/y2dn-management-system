@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\Controller; // Add this line
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;

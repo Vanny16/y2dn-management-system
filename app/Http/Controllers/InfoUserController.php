@@ -2,91 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\StudentEnrolled;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\View;
+use App\Http\Controllers\Controller;
+use DateTime;
 
 class InfoUserController extends Controller
 {
-
-    public function create()
-    {
-        return view('laravel-examples/user-profile');
-    }
+    protected $table = 'student_enrolled';
 
     public function enroll_student()
     {
-        return view('laravel-examples/enroll_student');
+        return view('laravel-examples.enroll_student');
     }
 
-    public function store(Request $request)
+    public function save_enrollee(Request $request)
     {
-
-        $attributes = request()->validate([
-            'name' => ['required', 'max:50'],
-            'email' => ['required', 'email', 'max:50', Rule::unique('users')->ignore(Auth::user()->id)],
-            'phone'     => ['max:50'],
-            'location' => ['max:70'],
-            'about_me'    => ['max:150'],
-        ]);
-        if($request->get('email') != Auth::user()->email)
-        {
-            if(env('IS_DEMO') && Auth::user()->id == 1)
-            {
-                return redirect()->back()->withErrors(['msg2' => 'You are in a demo version, you can\'t change the email address.']);
-
-            }
-
-        }
-        else{
-            $attribute = request()->validate([
-                'email' => ['required', 'email', 'max:50', Rule::unique('users')->ignore(Auth::user()->id)],
-            ]);
-        }
-
-
-        User::where('id',Auth::user()->id)
-        ->update([
-            'name'    => $attributes['name'],
-            'email' => $attribute['email'],
-            'phone'     => $attributes['phone'],
-            'location' => $attributes['location'],
-            'about_me'    => $attributes["about_me"],
+        // Validate the request data
+        $request->validate([
+            'student_id' => 'required|unique:' . $this->table,
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'middle_name' => 'required',
+            'gender' => 'required',
+            'mobile_number' => 'required',
+            'email' => 'required|email|unique:' . $this->table,
+            'address' => 'required',
+            'dob' => 'required|date_format:m-d-Y',
+            'department' => 'required',
+            'program' => 'required',
+            // Add other validation rules as needed
         ]);
 
+      // Parse and format the date of birth
+        $dob = DateTime::createFromFormat('m-d-Y', $request->dob)->format('Y-m-d');
 
-        return redirect('/user-profile')->with('success','Profile updated successfully');
-    }
+        // Save to the database
+        $enrollee = new StudentEnrolled($request->all());
+        $enrollee->dob = $dob; // Set the formatted date of birth
+        $enrollee->save();
 
-
-    public function save_enrollee()
-    {
-
-        $attributes = request()->validate([
-            'name' => ['required', 'max:50'],
-            'email' => ['required', 'email', 'max:50', Rule::unique('students')->ignore(Auth::user()->id)],
-            'phone'     => ['max:50'],
-            'location' => ['max:70'],
-            'about_me'    => ['max:150'],
-        ]);
-
-        dd($attributes);
-
-        if($request->get('email') != Auth::user()->email)
-        {
-            if(env('IS_DEMO') && Auth::user()->id == 1)
-            {
-                return redirect()->back()->withErrors(['msg2' => 'You are in a demo version, you can\'t change the email address.']);
-
-            }
-
-        }
-        else{
-            $attribute = request()->validate([
-                'email' => ['required', 'email', 'max:50', Rule::unique('students')->ignore(Auth::user()->id)],
-            ]);
-        }
+        // Redirect to the dashboard
+        return redirect('/dashboard')->with('success', 'Student enrolled successfully!');
     }
 }
