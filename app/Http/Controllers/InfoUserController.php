@@ -13,6 +13,16 @@ class InfoUserController extends Controller
 {
     protected $table = 'student_enrolled';
 
+    public function enrolled_students()
+    {
+        // Fetch data from the database
+        $enrolledStudents = StudentEnrolled::all();
+
+        // Pass data to the view
+        return view('laravel-examples.enrolled_students', ['enrolledStudents' => $enrolledStudents]);
+    }
+
+
     public function enroll_student()
     {
         return view('laravel-examples.enroll_student');
@@ -45,6 +55,6 @@ class InfoUserController extends Controller
         $enrollee->save();
 
         // Redirect to the dashboard
-        return redirect('/dashboard')->with('success', 'Student enrolled successfully!');
+        return redirect('/enrolled_students')->with('success', 'Student enrolled successfully!');
     }
 }

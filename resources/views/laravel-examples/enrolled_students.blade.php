@@ -1,3 +1,5 @@
+<!-- enrolled_students.blade.php -->
+
 @extends('layouts.user_type.auth')
 
 @section('content')
@@ -22,17 +24,17 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         ID
                                     </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Student ID
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Name
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Email
+                                        Date Enrolled
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Date Enrolled
+                                        Email
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Action
@@ -40,35 +42,38 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="ps-4">
-                                        <p class="text-xs font-weight-bold mb-0">1</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Admin</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">admin@softui.com</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Admin</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">16/06/18</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="#" class="mx-1" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                            <i class="fas fa-eye text-secondary"></i>
-                                        </a>
-                                        <a href="#" class="mx-1" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                            <i class="fas fa-user-edit text-secondary"></i>
-                                        </a>
-                                        <a href="#" class="mx-1" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                            <i class="fas fa-trash text-secondary"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <!-- Add more rows if needed -->
+                                @foreach ($enrolledStudents as $enrolledStudent)
+                                    <tr>
+                                        <td class="ps-4">
+                                            <p class="text-xs font-weight-bold mb-0">{{ $enrolledStudent->id }}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="text-xs font-weight-bold mb-0">{{ $enrolledStudent->student_id }}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ $enrolledStudent->last_name }}, {{ $enrolledStudent->first_name }} {{ substr($enrolledStudent->middle_name, 0, 1) }}.
+                                            </p>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="text-secondary text-xs font-weight-bold">{{ $enrolledStudent->created_at->format('d/m/y') }}</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="text-xs font-weight-bold mb-0">{{ $enrolledStudent->email }}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#" class="mx-1" data-bs-toggle="tooltip" data-bs-original-title="View user">
+                                                <i class="fas fa-eye text-secondary"></i>
+                                            </a>
+                                            <a href="#" class="mx-1" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+                                                <i class="fas fa-user-edit text-secondary"></i>
+                                            </a>
+                                            <a href="#" class="mx-1" data-bs-toggle="tooltip" data-bs-original-title="Delete user">
+                                                <i class="fas fa-trash text-secondary"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

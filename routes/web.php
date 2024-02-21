@@ -64,9 +64,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/enroll_student', [InfoUserController::class, 'enroll_student']);
 	Route::post('/save_enrollee', [InfoUserController::class, 'save_enrollee']);
-	Route::get('enrolled_students', function () {
-		return view('laravel-examples.enrolled_students');
-	})->name('enrolled_students');
+	Route::get('enrolled_students', [InfoUserController::class, 'enrolled_students'])->name('enrolled_students');
+
 
 
     Route::get('/login', function () {
