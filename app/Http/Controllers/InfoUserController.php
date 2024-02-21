@@ -15,13 +15,30 @@ class InfoUserController extends Controller
 
     public function enrolled_students()
     {
-        // Fetch data from the database
-        $enrolledStudents = StudentEnrolled::all();
+    // Fetch data from the database
+    $enrolledStudents = StudentEnrolled::all();
 
-        // Pass data to the view
-        return view('laravel-examples.enrolled_students', ['enrolledStudents' => $enrolledStudents]);
+    // Pass data to the view
+    return view('laravel-examples.enrolled_students', ['enrolledStudents' => $enrolledStudents]);
+    }   
+
+    public function delete_enrollee($id)
+{
+    // Find the enrollee by ID
+    $enrollee = StudentEnrolled::find($id);
+
+    // Check if the enrollee exists
+    if ($enrollee) {
+        // Delete the enrollee
+        $enrollee->delete();
+
+        // Redirect back with a success message
+        return redirect('/enrolled_students')->with('success', 'Student deleted successfully!');
+    } else {
+        // Redirect back with an error message
+        return redirect('/enrolled_students')->with('error', 'Student not found!');
     }
-
+}
 
     public function enroll_student()
     {

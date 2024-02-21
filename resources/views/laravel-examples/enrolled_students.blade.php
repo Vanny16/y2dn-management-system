@@ -61,16 +61,34 @@
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{ $enrolledStudent->email }}</p>
                                         </td>
-                                        <td class="text-center">
-                                            <a href="#" class="mx-1" data-bs-toggle="tooltip" data-bs-original-title="View user">
-                                                <i class="fas fa-eye text-secondary"></i>
+                                        <td style="text-align:center">
+                                            <a class="btn btn-primary btn-sm view-btn" 
+                                                data-toggle="modal" 
+                                                data-target="#viewStudentModal"
+                                                data-id="{{ $enrolledStudent->id }}"
+                                                data-student-id="{{ $enrolledStudent->student_id }}"
+                                                data-date-enrolled="{{ $enrolledStudent->created_at->format('d/m/y') }}"
+                                                data-last-name="{{ $enrolledStudent->last_name }}"
+                                                data-first-name="{{ $enrolledStudent->first_name }}"
+                                                data-middle-name="{{ $enrolledStudent->middle_name }}"
+                                                data-dob="{{ $enrolledStudent->dob }}"
+                                                data-address="{{ $enrolledStudent->address }}"
+                                                data-department="{{ $enrolledStudent->department }}"
+                                                data-program="{{ $enrolledStudent->program }}">
+                                                <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="#" class="mx-1" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                                <i class="fas fa-user-edit text-secondary"></i>
+                                            <a class="btn btn-secondary btn-sm" href="#}">
+                                                <i class="fas fa-user-edit"></i>
                                             </a>
-                                            <a href="#" class="mx-1" data-bs-toggle="tooltip" data-bs-original-title="Delete user">
-                                                <i class="fas fa-trash text-secondary"></i>
+                                            <a class="btn btn-danger btn-sm" href="#" onclick="event.preventDefault(); 
+                                                if (confirm('Are you sure you want to delete this student record?')) 
+                                                    document.getElementById('delete-form-{{ $enrolledStudent->id }}').submit();">
+                                                <i class="fas fa-trash"></i>
                                             </a>
+                                            <form id="delete-form-{{ $enrolledStudent->id }}" action="{{ route('delete_enrollee', $enrolledStudent->id) }}" method="POST" style="display: none;">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -83,4 +101,68 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="viewStudentModal" tabindex="-1" aria-labelledby="viewStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewStudentModalLabel">Student Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body-content">
+                <div class="row mb-2">
+                    <div class="col-6">
+                        <strong>Student ID:</strong>
+                        <span>{{ $enrolledStudent->student_id }}</span>
+                    </div>
+                    <div class="col-6">
+                        <strong>Date Enrolled:</strong>
+                        <span>{{ $enrolledStudent->created_at->format('d/m/y') }}</span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4">
+                        <strong>Last Name:</strong>
+                        <span>{{ $enrolledStudent->last_name }}</span>
+                    </div>
+                    <div class="col-4">
+                        <strong>First Name:</strong>
+                        <span>{{ $enrolledStudent->first_name }}</span>
+                    </div>
+                    <div class="col-4">
+                        <strong>Middle Name:</strong>
+                        <span>{{ $enrolledStudent->middle_name }}</span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <strong>Date of Birth:</strong>
+                        <span>{{ $enrolledStudent->dob }}</span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <strong>Address:</strong>
+                        <span>{{ $enrolledStudent->address }}</span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6">
+                        <strong>Department:</strong>
+                        <span>{{ $enrolledStudent->department }}</span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <strong>Program:</strong>
+                        <span>{{ $enrolledStudent->program }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
+
+

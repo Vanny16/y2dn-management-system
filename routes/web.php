@@ -65,6 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/enroll_student', [InfoUserController::class, 'enroll_student']);
 	Route::post('/save_enrollee', [InfoUserController::class, 'save_enrollee']);
 	Route::get('enrolled_students', [InfoUserController::class, 'enrolled_students'])->name('enrolled_students');
+	Route::delete('/delete_enrollee/{id}', [InfoUserController::class, 'delete_enrollee'])->name('delete_enrollee');
 
 
 
@@ -72,8 +73,6 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('dashboard');
 	})->name('sign-up');
 });
-
-
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', [RegisterController::class, 'create']);
