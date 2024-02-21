@@ -62,10 +62,11 @@ Route::group(['middleware' => 'auth'], function () {
 	})->name('sign-up');
 
     Route::get('/logout', [SessionsController::class, 'destroy']);
-	Route::get('/user-profile', [InfoUserController::class, 'create']);
-	Route::post('/user-profile', [InfoUserController::class, 'store']);
 	Route::get('/enroll_student', [InfoUserController::class, 'enroll_student']);
 	Route::post('/save_enrollee', [InfoUserController::class, 'save_enrollee']);
+	Route::get('enrolled_students', function () {
+		return view('laravel-examples.enrolled_students');
+	})->name('enrolled_students');
 
 
     Route::get('/login', function () {

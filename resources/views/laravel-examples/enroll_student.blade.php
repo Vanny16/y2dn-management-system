@@ -96,8 +96,8 @@
                                 <div class="@error('gender') border border-danger rounded-3 @enderror">
                                     <select class="form-control" id="gender" name="gender" required>
                                         <option value="" disabled selected>Select Gender</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
                                     </select>
                                     @error('gender')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
