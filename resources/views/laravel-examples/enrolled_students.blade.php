@@ -70,17 +70,17 @@
                                         <p class="text-xs font-weight-bold mb-0">{{ $enrolledStudent->email }}</p>
                                     </td>
                                     <td style="text-align:center">
-                                        <a class="btn btn-primary btn-sm view-btn" data-toggle="modal"
+                                        <a class="btn btn-primary btn-sm view-btn text-white" data-toggle="modal"
                                             data-target="#viewStudentModal{{ $enrolledStudent->id }}">
                                             <i class="fas fa-eye"></i>
                                         </a>
 
-                                        <a class="btn btn-secondary btn-sm view-btn" data-toggle="modal"
+                                        <a class="btn btn-secondary btn-sm view-btn text-white" data-toggle="modal"
                                             data-target="#editStudentModal{{ $enrolledStudent->id }}">
                                             <i class="fas fa-user-edit"></i>
                                         </a>
 
-                                        <a class="btn btn-danger btn-sm" href="#"
+                                        <a class="btn btn-danger btn-sm text-white" href="#"
                                             onclick="event.preventDefault(); 
                                                 if (confirm('Are you sure you want to delete this student record?')) 
                                                     document.getElementById('delete-form-{{ $enrolledStudent->id }}').submit();">
@@ -108,16 +108,6 @@
                                             </div>
                                             <div class="modal-body" id="modal-body-content">
                                                 <div class="row mb-2">
-                                                    <div class="col-6">
-                                                        <strong>Student ID:</strong>
-                                                        <span>{{ $enrolledStudent->student_id }}</span>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <strong>Date Enrolled:</strong>
-                                                        <span>{{ $enrolledStudent->created_at->format('d/m/y') }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-2">
                                                     <div class="col-4">
                                                         <strong>Last Name:</strong>
                                                         <span>{{ $enrolledStudent->last_name }}</span>
@@ -129,6 +119,24 @@
                                                     <div class="col-4">
                                                         <strong>Middle Name:</strong>
                                                         <span>{{ $enrolledStudent->middle_name }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-6">
+                                                        <strong>Date Enrolled:</strong>
+                                                        <span>{{ $enrolledStudent->created_at->format('d/m/y') }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-6">
+                                                        <strong>Student ID:</strong>
+                                                        <span>{{ $enrolledStudent->student_id }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-12">
+                                                        <strong>Mobile Number:</strong>
+                                                        <span>{{ $enrolledStudent->mobile_number }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-2">
@@ -217,7 +225,7 @@
                                                     </div>
 
                                                     <div class="col-4">
-                                                        <label for="Address">Date of Birth</label>
+                                                        <label for="Address">Address</label>
                                                         <input type="date" name="address"
                                                             value="{{ $enrolledStudent->Address }}">
                                                     </div>

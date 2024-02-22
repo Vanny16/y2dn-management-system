@@ -14,6 +14,9 @@
             <div class="card-body pt-4 p-3">
                 <form id="enrollForm" action="/save_enrollee" method="POST" role="form text-left">
                     @csrf
+                    <!-- <form method="POST" action="{{ route('employee.edit', ['id' => $employee->id]) }}" class="form-container" id="updateEmployeeForm">
+                    @csrf
+                    @method('PUT') -->
                     @if($errors->any())
                     <!-- Error message display -->
                     <div class="mt-3 alert alert-primary alert-dismissible fade show" role="alert">

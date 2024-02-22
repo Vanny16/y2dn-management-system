@@ -15,30 +15,30 @@ class InfoUserController extends Controller
 
     public function enrolled_students()
     {
-    // Fetch data from the database
-    $enrolledStudents = StudentEnrolled::all();
+        // Fetch data from the database
+        $enrolledStudents = StudentEnrolled::all();
 
-    // Pass data to the view
-    return view('laravel-examples.enrolled_students', ['enrolledStudents' => $enrolledStudents]);
-    }   
+        // Pass data to the view
+        return view('laravel-examples.enrolled_students', ['enrolledStudents' => $enrolledStudents]);
+    }
 
     public function delete_enrollee($id)
-{
-    // Find the enrollee by ID
-    $enrollee = StudentEnrolled::find($id);
+    {
+        // Find the enrollee by ID
+        $enrollee = StudentEnrolled::find($id);
 
-    // Check if the enrollee exists
-    if ($enrollee) {
-        // Delete the enrollee
-        $enrollee->delete();
+        // Check if the enrollee exists
+        if ($enrollee) {
+            // Delete the enrollee
+            $enrollee->delete();
 
-        // Redirect back with a success message
-        return redirect('/enrolled_students')->with('success', 'Student deleted successfully!');
-    } else {
-        // Redirect back with an error message
-        return redirect('/enrolled_students')->with('error', 'Student not found!');
+            // Redirect back with a success message
+            return redirect('/enrolled_students')->with('success', 'Student deleted successfully!');
+        } else {
+            // Redirect back with an error message
+            return redirect('/enrolled_students')->with('error', 'Student not found!');
+        }
     }
-}
 
     public function enroll_student()
     {
@@ -57,21 +57,34 @@ class InfoUserController extends Controller
             'mobile_number' => 'required',
             'email' => 'required|email|unique:' . $this->table,
             'address' => 'required',
-            'dob' => 'required|date_format:m-d-Y',
+            'dob' => 'required',
             'department' => 'required',
             'program' => 'required',
             // Add other validation rules as needed
         ]);
 
-      // Parse and format the date of birth
-        $dob = DateTime::createFromFormat('m-d-Y', $request->dob)->format('Y-m-d');
+        // Create a new instance of the StudentEnrolled model
+        $enrollee = new StudentEnrolled;
 
-        // Save to the database
-        $enrollee = new StudentEnrolled($request->all());
-        $enrollee->dob = $dob; // Set the formatted date of birth
+        // Set the attributes with the validated data
+        $enrollee->student_id = $request->input('student_id');
+        $enrollee->last_name = $request->input('last_name');
+        $enrollee->first_name = $request->input('first_name');
+        $enrollee->middle_name = $request->input('middle_name');
+        $enrollee->gender = $request->input('gender');
+        $enrollee->mobile_number = $request->input('mobile_number');
+        $enrollee->email = $request->input('email');
+        $enrollee->address = $request->input('address');
+        $enrollee->dob = $request->input('dob');
+        $enrollee->department = $request->input('department');
+        $enrollee->program = $request->input('program');
+        // Set other attributes as needed
+
+        // Save the enrollee to the database
         $enrollee->save();
 
         // Redirect to the dashboard
         return redirect('/enrolled_students')->with('success', 'Student enrolled successfully!');
     }
+
 }
