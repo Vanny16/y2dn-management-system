@@ -87,19 +87,56 @@ class InfoUserController extends Controller
         // Redirect to the dashboard
         return redirect('/enrolled_students')->with('success', 'Student enrolled successfully!');
     }
-    public function update_enrollee($id)
+
+    public function edit($id)
     {
-        // Find the enrolled student by ID
+        //Find the enrolled student by ID
         $enrolledStudent = StudentEnrolled::find($id);
 
         // Check if the enrolled student exists
         if ($enrolledStudent) {
             // Pass the enrolled student data to the view
             return view('management.enrolled_student_update', ['enrolledStudent' => $enrolledStudent]);
-        } else {
-            // Redirect back with an error message if the enrolled student is not found
-            return redirect('/enrolled_students')->with('error', 'Student not found!');
         }
+    }
+    public function update_enrollee(Request $request, $id)
+    {
+        // Find the enrolled student by ID
+        $enrolledStudent = StudentEnrolled::find($id);
+
+        // Validate the request data
+        $request->validate([
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'middle_name' => 'required',
+            'gender' => 'required',
+            'mobile_number' => 'required',
+            'email' => ['required', 'email', Rule::unique('student_enrolled')->ignore($enrolledStudent->id)],
+            'address' => 'required',
+            'dob' => 'required',
+            'department' => 'required',
+            'program' => 'required',
+            // Add other validation rules as needed
+        ]);
+
+        // Update the enrolled student with the validated data
+        $enrolledStudent->last_name = $request->input('last_name');
+        $enrolledStudent->first_name = $request->input('first_name');
+        $enrolledStudent->middle_name = $request->input('middle_name');
+        $enrolledStudent->gender = $request->input('gender');
+        $enrolledStudent->mobile_number = $request->input('mobile_number');
+        $enrolledStudent->email = $request->input('email');
+        $enrolledStudent->address = $request->input('address');
+        $enrolledStudent->dob = $request->input('dob');
+        $enrolledStudent->department = $request->input('department');
+        $enrolledStudent->program = $request->input('program');
+        // Update other attributes as needed
+
+        // Save the updated enrollee to the database
+        $enrolledStudent->save();
+
+        // Redirect to the dashboard with a success message
+        return redirect('/enrolled_students')->with('success', 'Student updated successfully!');
     }
 
 

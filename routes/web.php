@@ -66,7 +66,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/save_enrollee', [InfoUserController::class, 'save_enrollee']);
 	Route::get('enrolled_students', [InfoUserController::class, 'enrolled_students'])->name('enrolled_students');
 	Route::delete('/delete_enrollee/{id}', [InfoUserController::class, 'delete_enrollee'])->name('delete_enrollee');
-	Route::get('/update_enrollee/{id}', [InfoUserController::class, 'update_enrollee'])->name('management.enrolled_student_update');
+	Route::get('/update_enrollee/{id}', [InfoUserController::class, 'edit'])->name('management.enrolled_student_update');
+	Route::put('/management/enrolled_student_update/{id}', [InfoUserController::class, 'update_enrollee']);
+
+
 
 	Route::get('/login', function () {
 		return view('dashboard');
@@ -74,7 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'guest'], function () {
-	Route::get('/register', [RegisterController::class, 'create']);
+	Route::get('/register', [RegisterController::class, 'create']); 
 	Route::post('/register', [RegisterController::class, 'store']);
 	Route::get('/login', [SessionsController::class, 'create']);
 	Route::post('/session', [SessionsController::class, 'store']);

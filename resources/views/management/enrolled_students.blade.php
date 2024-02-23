@@ -159,7 +159,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row mb-2">
-                                                    <div class="col-6">
+                                                    <div class="col-12">
                                                         <strong>Department:</strong>
                                                         <span>{{ $enrolledStudent->department }}</span>
                                                     </div>
