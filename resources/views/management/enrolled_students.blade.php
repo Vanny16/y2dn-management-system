@@ -85,19 +85,16 @@
                                             data-target="#viewStudentModal{{ $enrolledStudent->id }}">
                                             <i class="fas fa-eye"></i>
                                         </a>
-
-                                        <a class="btn btn-secondary btn-sm view-btn text-white" data-toggle="modal"
-                                            data-target="#editStudentModal{{ $enrolledStudent->id }}">
+                                        <a class="btn btn-secondary btn-sm view-btn text-white"
+                                            href="{{ route('management.enrolled_student_update', $enrolledStudent->id) }}">
                                             <i class="fas fa-user-edit"></i>
                                         </a>
-
                                         <a class="btn btn-danger btn-sm text-white" href="#"
                                             onclick="event.preventDefault(); 
                                                 if (confirm('Are you sure you want to delete this student record?')) 
                                                     document.getElementById('delete-form-{{ $enrolledStudent->id }}').submit();">
                                             <i class="fas fa-trash"></i>
                                         </a>
-
                                         <form id="delete-form-{{ $enrolledStudent->id }}"
                                             action="{{ route('delete_enrollee', $enrolledStudent->id) }}" method="POST"
                                             style="display: none;">
@@ -106,7 +103,6 @@
                                         </form>
                                     </td>
                                 </tr>
-
                                 <div class="modal fade" id="viewStudentModal{{ $enrolledStudent->id }}" tabindex="-1"
                                     aria-labelledby="viewStudentModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -178,91 +174,7 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-                                <div class="modal fade" id="editStudentModal{{ $enrolledStudent->id }}" tabindex="-1"
-                                    aria-labelledby="viewStudentModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="viewStudentModalLabel">Student Information
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body" id="modal-body-content">
-                                                <div class="row mb-2">
-                                                    <div class="col-6">
-                                                        <label for="student_id">Student ID:</label>
-                                                        <input type="number" value="{{ $enrolledStudent->student_id }}"
-                                                            readonly>
-                                                    </div>
-
-                                                    <div class="col-6">
-                                                        <label for="date_enrolled">Date Enrolled</label>
-                                                        <input type="text" name="date_enrolled"
-                                                            value="{{ $enrolledStudent->created_at->format('m/d/y') }}">
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="row mb-2">
-
-                                                    <div class="col-4">
-                                                        <label for="last_name">Last Name</label>
-                                                        <input type="text" name="last_name"
-                                                            value="{{ $enrolledStudent->last_name }}">
-                                                    </div>
-
-                                                    <div class="col-4">
-                                                        <label for="first_name">First Name</label>
-                                                        <input type="text" name="first_name"
-                                                            value="{{ $enrolledStudent->first_name }}">
-                                                    </div>
-
-                                                    <div class="col-4">
-                                                        <label for="middle_name">Middle Name</label>
-                                                        <input type="text" name="middle_name"
-                                                            value="{{ $enrolledStudent->middle_name }}">
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="row mb-2">
-                                                    <div class="col-4">
-                                                        <label for="birth_date">Date of Birth</label>
-                                                        <input type="date" name="birth_date"
-                                                            value="{{ $enrolledStudent->dob }}">
-                                                    </div>
-
-                                                    <div class="col-4">
-                                                        <label for="Address">Address</label>
-                                                        <input type="date" name="address"
-                                                            value="{{ $enrolledStudent->Address }}">
-                                                    </div>
-
-                                                    <div class="col-4">
-                                                        <label for="Department">Department</label>
-                                                        <input type="text" name="department"
-                                                            value="{{ $enrolledStudent->department }}">
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mb-2">
-                                                    <div class="col-12">
-                                                        <label for="Program">Program</label>
-                                                        <input type="text" name="program"
-                                                            value="{{ $enrolledStudent->program }}">
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                     </div>
-
                     @endforeach
                     </tbody>
                     </table>

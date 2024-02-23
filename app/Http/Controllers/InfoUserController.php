@@ -19,7 +19,7 @@ class InfoUserController extends Controller
         $enrolledStudents = StudentEnrolled::all();
 
         // Pass data to the view
-        return view('laravel-examples.enrolled_students', ['enrolledStudents' => $enrolledStudents]);
+        return view('management.enrolled_students', ['enrolledStudents' => $enrolledStudents]);
     }
 
     public function delete_enrollee($id)
@@ -42,7 +42,7 @@ class InfoUserController extends Controller
 
     public function enroll_student()
     {
-        return view('laravel-examples.enroll_student');
+        return view('management.enroll_student');
     }
 
     public function save_enrollee(Request $request)
@@ -87,5 +87,20 @@ class InfoUserController extends Controller
         // Redirect to the dashboard
         return redirect('/enrolled_students')->with('success', 'Student enrolled successfully!');
     }
+    public function update_enrollee($id)
+    {
+        // Find the enrolled student by ID
+        $enrolledStudent = StudentEnrolled::find($id);
+
+        // Check if the enrolled student exists
+        if ($enrolledStudent) {
+            // Pass the enrolled student data to the view
+            return view('management.enrolled_student_update', ['enrolledStudent' => $enrolledStudent]);
+        } else {
+            // Redirect back with an error message if the enrolled student is not found
+            return redirect('/enrolled_students')->with('error', 'Student not found!');
+        }
+    }
+
 
 }
