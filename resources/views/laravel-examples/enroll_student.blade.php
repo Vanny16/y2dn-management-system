@@ -114,7 +114,7 @@
                             <div class="form-group">
                                 <label for="mobile-number" class="form-control-label">{{ __('Mobile Number') }}</label>
                                 <div class="@error('mobile_number') border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="number" maxlength="10" placeholder="9123456789"
+                                    <input class="form-control" type="text" placeholder="9123456789" maxlength="10"
                                         id="mobile-number" name="mobile_number" required>
                                     @error('mobile_number')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -208,6 +208,15 @@
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Google Captcha -->
+                            <div class="form-group" required>
+                                {!! NoCaptcha::renderJs() !!}
+                                {!! NoCaptcha::display() !!}
                             </div>
                         </div>
                     </div>

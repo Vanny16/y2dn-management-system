@@ -60,6 +60,7 @@ class InfoUserController extends Controller
             'dob' => 'required',
             'department' => 'required',
             'program' => 'required',
+            'g-recaptcha-response' => 'required|captcha',
             // Add other validation rules as needed
         ]);
 
