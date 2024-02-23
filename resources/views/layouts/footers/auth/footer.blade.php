@@ -6,15 +6,12 @@
                     © <script>
                         document.write(new Date().getFullYear())
                     </script>, made with <i class="fa fa-heart"></i> by
-                    <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">ISCP</a>&amp; <a style="color: #252f40;" href="https://www.updivision.com" class="font-weight-bold ml-1" target="_blank">VANNY</a>
+                    <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">ISCP</a>
                     for a better Experience.
                 </div>
             </div>
             <div class="col-lg-6">
                 <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                    <li class="nav-item">
-                        <a href="https://www.github.com/vanny16" class="nav-link text-muted" target="_blank">VANNY</a>
-                    </li>
                     <li class="nav-item">
                         <a href="https://www.iscp.com" class="nav-link text-muted" target="_blank">ISCP</a>
                     </li>
