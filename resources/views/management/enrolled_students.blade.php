@@ -28,9 +28,10 @@
                     </div>
                     @endif
                 </div>
+                <hr>
                 <div class="card-body pt-0 pb-2">
                     <div class="table-responsive">
-                        <table class="table align-items-center mb-0">
+                        <table id="enrolledStudentsTable" class="table align-items-center mb-0">
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -185,14 +186,26 @@
 </div>
 </div>
 
-
+<script>
+    $(document).ready(function () {
+        var table = $('#enrolledStudentsTable').DataTable();
+        $('#search').on('keyup', function () {
+            table.search($(this).val()).draw();
+        });
+    });
+</script>
 
 @endsection
-
-
 
 <!-- Add these links to the head section of your HTML -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- Add these links to the head section of your HTML -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>

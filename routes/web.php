@@ -72,6 +72,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('/management/add_staff/', [InfoUserController::class, 'add_staff']);
 	Route::get('user-management', [InfoUserController::class, 'user_management'])->name('user-management');
 	Route::get('/student_documents', [StudentDocumentsController::class, 'student_documents'])->name('student_documents');
+	
  
 
 
