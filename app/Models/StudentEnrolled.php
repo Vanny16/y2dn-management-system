@@ -24,4 +24,9 @@ class StudentEnrolled extends Model
         'department',
         'program',
     ];
+
+    public function documents()
+    {
+        return $this->hasOne(StudentDocuments::class, 'student_id', 'student_id');
+    }
 }

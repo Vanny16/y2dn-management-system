@@ -64,12 +64,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/enroll_student', [InfoUserController::class, 'enroll_student']);
 	Route::post('/save_enrollee', [InfoUserController::class, 'save_enrollee']);
-	Route::get('enrolled_students', [InfoUserController::class, 'enrolled_students'])->name('enrolled_students');
+	Route::get('/enrolled_students', [InfoUserController::class, 'enrolled_students'])->name('enrolled_students');
 	Route::delete('/delete_enrollee/{id}', [InfoUserController::class, 'delete_enrollee'])->name('delete_enrollee');
 	Route::get('/update_enrollee/{id}', [InfoUserController::class, 'edit'])->name('management.enrolled_student_update');
 	Route::put('/management/enrolled_student_update/{id}', [InfoUserController::class, 'update_enrollee']);
 	Route::put('/management/add_staff/', [InfoUserController::class, 'add_staff']);
 	Route::get('user-management', [InfoUserController::class, 'user_management'])->name('user-management');
+	Route::get('/student_documents', [InfoUserController::class, 'enrolled_students'])->name('enrolled_students');
 
 
 

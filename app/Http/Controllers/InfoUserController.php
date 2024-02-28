@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use DateTime;
 use DB;
+use App\Models\StudentDocuments;
 
 class InfoUserController extends Controller
 {
@@ -89,6 +90,16 @@ class InfoUserController extends Controller
         // Save the enrollee to the database
         $enrollee->save();
 
+        // Create a corresponding student documents record
+        $studentDocuments = new StudentDocuments([
+            'student_id' => $enrollee->student_id,
+            'last_name' => $enrollee->last_name,
+            'first_name' => $enrollee->first_name,
+            'middle_name' => $enrollee->middle_name,
+        ]);
+
+        $studentDocuments->save();
+
         // Redirect to the dashboard
         return redirect('/enrolled_students')->with('success', 'Student enrolled successfully!');
     }
@@ -140,6 +151,16 @@ class InfoUserController extends Controller
         // Save the updated enrollee to the database
         $enrolledStudent->save();
 
+        // Update the corresponding record in the StudentDocuments table
+        $studentDocuments = StudentDocuments::where('student_id', $enrolledStudent->student_id)->first();
+        if ($studentDocuments) {
+            $studentDocuments->last_name = $enrolledStudent->last_name;
+            $studentDocuments->first_name = $enrolledStudent->first_name;
+            $studentDocuments->middle_name = $enrolledStudent->middle_name;
+            // Update other fields as needed
+            $studentDocuments->save();
+        }
+
         // Redirect to the dashboard with a success message
         return redirect('/enrolled_students')->with('success', 'Student updated successfully!');
     }
@@ -165,8 +186,8 @@ class InfoUserController extends Controller
         $validatedData['password'] = Hash::make($request->input('password'));
         $validatedData['created_at'] = Carbon::parse('2022-01-01 12:00:00');
 
-    // Create a new user record
-         DB::table('users')->insert($validatedData);
+        // Create a new user record
+        DB::table('users')->insert($validatedData);
 
         return redirect('/user-management')->with('success', 'Staff Added successfully!');
     }
@@ -176,15 +197,15 @@ class InfoUserController extends Controller
         // Fetch data from the database
         // $users_list = UsersModel::all();
         $users_list = DB::table('users')
-        ->join('user_roles','user_roles.id','=','users.user_role')
-        ->get();
+            ->join('user_roles', 'user_roles.id', '=', 'users.user_role')
+            ->get();
 
         $roles_list = DB::table('user_roles')
-        ->get();
+            ->get();
 
 
         // Pass data to the view
-        return view('management.user-management',compact('users_list','roles_list'));
+        return view('management.user-management', compact('users_list', 'roles_list'));
     }
 
 
