@@ -24,4 +24,6 @@ class StudentDocuments extends Model
     {
         return $this->belongsTo(StudentEnrolled::class, 'student_id', 'student_id');
     }
+
+    
 }

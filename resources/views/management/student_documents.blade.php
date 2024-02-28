@@ -99,43 +99,7 @@
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="viewStudentModalLabel">Student Information
                                                 </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body" id="modal-body-content">
-                                                <div class="row mb-2">
-                                                    <div class="col-6">
-                                                        <strong>Student ID:</strong>
-                                                        <span>{{ $studentDocuments->student_id }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-2">
-                                                    <div class="col-4">
-                                                        <strong>Last Name:</strong>
-                                                        <span>{{ $studentDocuments->last_name }}</span>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <strong>First Name:</strong>
-                                                        <span>{{ $studentDocuments->first_name }}</span>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <strong>Middle Name:</strong>
-                                                        <span>{{ $studentDocuments->middle_name }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Edit Modal -->
-                                <div class="modal fade" id="editStudentModal{{ $studentDocuments->id }}" tabindex="-1"
-                                    aria-labelledby="editStudentModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editStudentModalLabel">Student Documents
-                                                    Information</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                <button type="button" class="btn-close" data-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body" id="modal-body-content">
@@ -163,42 +127,138 @@
                                                 <div class="row mb-2">
                                                     <div class="col-12">
                                                         <strong>Birth Certificate:</strong>
-                                                        <div class="input-group">
-                                                            <input type="file" class="form-control"
-                                                                id="birthCertificateFile">
-                                                        </div>
+                                                        @if($studentDocuments->birth_certificate)
+                                                        <a
+                                                            href="{{ route('download_student_document', ['id' => $studentDocuments->id, 'type' => 'birth_certificate']) }}">Download</a>
+                                                        @else
+                                                        Not Submitted
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="row mb-2">
                                                     <div class="col-12">
                                                         <strong>Form 137:</strong>
-                                                        <div class="input-group">
-                                                            <input type="file" class="form-control" id="form137File">
-                                                        </div>
+                                                        @if($studentDocuments->form_137)
+                                                        <a
+                                                            href="{{ route('download_student_document', ['id' => $studentDocuments->id, 'type' => 'form_137']) }}">Download</a>
+                                                        @else
+                                                        Not Submitted
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="row mb-2">
                                                     <div class="col-12">
                                                         <strong>Transcript Generation:</strong>
-                                                        <div class="input-group">
-                                                            <input type="file" class="form-control" id="transcriptFile">
-                                                        </div>
+                                                        @if($studentDocuments->transcript_generation)
+                                                        <a
+                                                            href="{{ route('download_student_document', ['id' => $studentDocuments->id, 'type' => 'transcript_generation']) }}">Download</a>
+                                                        @else
+                                                        Not Submitted
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="row mb-2">
                                                     <div class="col-12">
                                                         <strong>Good Moral:</strong>
-                                                        <div class="input-group">
-                                                            <input type="file" class="form-control" id="goodMoralFile">
-                                                        </div>
+                                                        @if($studentDocuments->good_moral)
+                                                        <a
+                                                            href="{{ route('download_student_document', ['id' => $studentDocuments->id, 'type' => 'good_moral']) }}">Download</a>
+                                                        @else
+                                                        Not Submitted
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary">Submit</button>
                                                 <button type="button" class="btn btn-secondary"
                                                     data-dismiss="modal">Close</button>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Edit Modal -->
+                                <div class="modal fade" id="editStudentModal{{ $studentDocuments->id }}" tabindex="-1"
+                                    aria-labelledby="editStudentModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                                        <div class="modal-content">
+                                            <form
+                                                action="{{ route('update_student_documents', $studentDocuments->id) }}"
+                                                method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editStudentModalLabel">Student Documents
+                                                        Information</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body" id="modal-body-content">
+                                                    <div class="row mb-2">
+                                                        <div class="col-6">
+                                                            <strong>Student ID:</strong>
+                                                            <span>{{ $studentDocuments->student_id }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-4">
+                                                            <strong>Last Name:</strong>
+                                                            <span>{{ $studentDocuments->last_name }}</span>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <strong>First Name:</strong>
+                                                            <span>{{ $studentDocuments->first_name }}</span>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <strong>Middle Name:</strong>
+                                                            <span>{{ $studentDocuments->middle_name }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-2" style="text-align: center; color: red;">
+                                                        <strong>Note: Only images are accepted, specifically in JPG,
+                                                            JPEG, and PNG formats.</strong>
+                                                    </div>
+                                                    <!-- File Attachment Section -->
+                                                    <div class="row mb-2">
+                                                        <div class="col-12">
+                                                            <strong>Birth Certificate:</strong>
+                                                            <div class="input-group">
+                                                                <input type="file" class="form-control"
+                                                                    name="birth_certificate">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-12">
+                                                            <strong>Form 137:</strong>
+                                                            <div class="input-group">
+                                                                <input type="file" class="form-control" name="form_137">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-2">
+                                                            <div class="col-12">
+                                                                <strong>Transcript Generation:</strong>
+                                                                <div class="input-group">
+                                                                    <input type="file" class="form-control"
+                                                                        name="transcript_generation">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-2">
+                                                            <div class="col-12">
+                                                                <strong>Good Moral:</strong>
+                                                                <div class="input-group">
+                                                                    <input type="file" class="form-control"
+                                                                        name="good_moral">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Close</button>
+                                                    </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
