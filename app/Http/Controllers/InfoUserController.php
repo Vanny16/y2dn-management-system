@@ -9,7 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Carbon;
 use DateTime;
+use DB;
 
 class InfoUserController extends Controller
 {
@@ -144,25 +147,44 @@ class InfoUserController extends Controller
     public function add_staff(Request $request)
     {
 
-        dd($request->all());
+        // dd($request->all());
         // Validate the request data
         $validatedData = $request->validate([
             'last_name' => 'required',
             'first_name' => 'required',
             'middle_name' => 'required',
             'gender' => 'required',
-            'mobile_number' => 'required',
-            'user_name' => ['required', 'unique:users,user_name'],
+            'phone' => 'required',
+            'username' => ['required', 'unique:users,username'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'address' => 'required',
+            // 'address' => 'required',
+            'password' => 'required|min:8',
             'user_role' => 'required',
 
         ]);
+        $validatedData['password'] = Hash::make($request->input('password'));
+        $validatedData['created_at'] = Carbon::parse('2022-01-01 12:00:00');
 
     // Create a new user record
-    $newUser = UsersModel::create($validatedData);
-        // Redirect to the dashboard with a success message
+         DB::table('users')->insert($validatedData);
+
         return redirect('/user-management')->with('success', 'Staff Added successfully!');
+    }
+
+    public function user_management()
+    {
+        // Fetch data from the database
+        // $users_list = UsersModel::all();
+        $users_list = DB::table('users')
+        ->join('user_roles','user_roles.id','=','users.user_role')
+        ->get();
+
+        $roles_list = DB::table('user_roles')
+        ->get();
+
+
+        // Pass data to the view
+        return view('management.user-management',compact('users_list','roles_list'));
     }
 
 

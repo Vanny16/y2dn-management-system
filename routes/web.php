@@ -41,9 +41,9 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('rtl');
 	})->name('rtl');
 
-	Route::get('user-management', function () {
-		return view('management/user-management');
-	})->name('user-management');
+	// Route::get('user-management', function () {
+	// 	return view('management/user-management');
+	// })->name('user-management');
 
 	Route::get('tables', function () {
 		return view('tables');
@@ -69,6 +69,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/update_enrollee/{id}', [InfoUserController::class, 'edit'])->name('management.enrolled_student_update');
 	Route::put('/management/enrolled_student_update/{id}', [InfoUserController::class, 'update_enrollee']);
 	Route::put('/management/add_staff/', [InfoUserController::class, 'add_staff']);
+	Route::get('user-management', [InfoUserController::class, 'user_management'])->name('user-management');
+
 
 
 

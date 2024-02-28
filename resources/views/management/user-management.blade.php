@@ -14,6 +14,33 @@
 
     <div class="row">
         <div class="col-12">
+            @if($errors->any())
+                <!-- Error message display -->
+                <div class="mt-3 alert alert-primary alert-dismissible fade show" role="alert" id="alert-error">
+                    <span class="alert-text text-white">
+                        {{$errors->first()}}
+                    </span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if(session('success'))
+                <!-- Success message display -->
+                <div class="m-3 alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
+                    <span class="alert-text text-white">
+                        {{ session('success') }}
+                    </span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-12">
+
+
             <div class="card mb-4 mx-4">
                 <div class="card-header pb-0">
                     <div class="d-flex flex-row justify-content-between">
@@ -28,12 +55,12 @@
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    {{-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         ID
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    </th> --}}
+                                    {{-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Photo
-                                    </th>
+                                    </th> --}}
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Name
                                     </th>
@@ -52,156 +79,39 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @isset($users_list)
+                                @foreach ($users_list as $user)
                                 <tr>
-                                    <td class="ps-4">
+                                    {{-- <td class="ps-4">
                                         <p class="text-xs font-weight-bold mb-0">1</p>
-                                    </td>
-                                    <td>
+                                    </td> --}}
+                                    {{-- <td>
                                         <div>
                                             <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3">
                                         </div>
+                                    </td> --}}
+                                    <td class="text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{ $user->last_name }}, {{ $user->first_name }}</p>
                                     </td>
                                     <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Admin</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $user->email }}</p>
                                     </td>
                                     <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">admin@softui.com</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $user->user_role }}</p>
                                     </td>
+
                                     <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Admin</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $user->created_at }}</p>
                                     </td>
+
                                     <td class="text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">16/06/18</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                            <i class="fas fa-user-edit text-secondary"></i>
-                                        </a>
-                                        <span>
-                                            <i class="cursor-pointer fas fa-trash text-secondary"></i>
-                                        </span>
+                                        <p class="text-xs font-weight-bold mb-0">---</p>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="ps-4">
-                                        <p class="text-xs font-weight-bold mb-0">2</p>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <img src="/assets/img/team-1.jpg" class="avatar avatar-sm me-3">
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Creator</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">creator@softui.com</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Creator</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">05/05/20</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                            <i class="fas fa-user-edit text-secondary"></i>
-                                        </a>
-                                        <span>
-                                            <i class="cursor-pointer fas fa-trash text-secondary"></i>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="ps-4">
-                                        <p class="text-xs font-weight-bold mb-0">3</p>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <img src="/assets/img/team-3.jpg" class="avatar avatar-sm me-3">
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Member</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">member@softui.com</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Member</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">23/06/20</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                            <i class="fas fa-user-edit text-secondary"></i>
-                                        </a>
-                                        <span>
-                                            <i class="cursor-pointer fas fa-trash text-secondary"></i>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="ps-4">
-                                        <p class="text-xs font-weight-bold mb-0">4</p>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <img src="/assets/img/team-4.jpg" class="avatar avatar-sm me-3">
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Peterson</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">peterson@softui.com</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Member</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">26/10/17</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                            <i class="fas fa-user-edit text-secondary"></i>
-                                        </a>
-                                        <span>
-                                            <i class="cursor-pointer fas fa-trash text-secondary"></i>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="ps-4">
-                                        <p class="text-xs font-weight-bold mb-0">5</p>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <img src="/assets/img/marie.jpg" class="avatar avatar-sm me-3">
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Marie</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">marie@softui.com</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Creator</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">23/01/21</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                            <i class="fas fa-user-edit text-secondary"></i>
-                                        </a>
-                                        <span>
-                                            <i class="cursor-pointer fas fa-trash text-secondary"></i>
-                                        </span>
-                                    </td>
-                                </tr>
+
+                                @endforeach
+
+                                @endisset
                             </tbody>
                         </table>
                     </div>
@@ -224,28 +134,7 @@
                 <form method="POST" action="/management/add_staff/" class="form-container" id="updateStudentForm">
                     @csrf
                     @method('PUT')
-                    @if($errors->any())
-                    <!-- Error message display -->
-                    <div class="mt-3 alert alert-primary alert-dismissible fade show" role="alert">
-                        <span class="alert-text text-white">
-                            {{$errors->first()}}
-                        </span>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                            <i class="fa fa-close" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    @endif
-                    @if(session('success'))
-                    <!-- Success message display -->
-                    <div class="m-3 alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
-                        <span class="alert-text text-white">
-                            {{ session('success') }}
-                        </span>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                            <i class="fa fa-close" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    @endif
+
                     <div class="row">
                         <!-- First Column - Last Name -->
                         <div class="col-md-4">
@@ -291,10 +180,10 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="Username" class="form-control-label">{{ __('Username') }}</label>
-                                <div class="@error('user_name') border border-danger rounded-3 @enderror">
+                                <div class="@error('username') border border-danger rounded-3 @enderror">
                                     <input class="form-control" type="text" placeholder="Username" id="user-name"
-                                    name="user_name" value="" required>
-                                    @error('user_name')
+                                    name="username" value="" required>
+                                    @error('username')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
@@ -318,12 +207,12 @@
                         <!-- Second Column - Mobile Number -->
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="mobile-number" class="form-control-label">{{ __('Mobile Number') }}</label>
-                                <div class="@error('mobile_number') border border-danger rounded-3 @enderror">
+                                <label for="phone" class="form-control-label">{{ __('Mobile Number') }}</label>
+                                <div class="@error('phone') border border-danger rounded-3 @enderror">
                                     <input class="form-control" type="number" maxlength="10" placeholder="9123456789"
-                                        id="mobile-number" name="mobile_number"
+                                        id="phone" name="phone"
                                         value=""  required>
-                                    @error('mobile_number')
+                                    @error('phone')
                                     <p class=" text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
@@ -365,11 +254,12 @@
                                 <label for="user_role" class="form-control-label">{{ __('User role') }}</label>
                                 <div class="@error('user_role') border border-danger rounded-3 @enderror">
                                     <select class="form-control" id="user_role" name="user_role" required>
-                                        <option value="Admin">Admin</option>
-                                        <option value="Adik">Adik</option>
+                                        @foreach($roles_list as $role)
+                                            <option value="{{ $role->id }}">{{ $role->user_role }}</option>
+                                        @endforeach
                                     </select>
                                     @error('user_role')
-                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
@@ -391,3 +281,27 @@
 <!-- Add these links to the head section of your HTML -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+    // Automatically close alerts after 6 seconds
+    window.setTimeout(function() {
+        var errorAlert = document.getElementById('alert-error');
+        var successAlert = document.getElementById('alert-success');
+
+        if (errorAlert) {
+            errorAlert.style.transition = "opacity 0.5s";
+            errorAlert.style.opacity = 0;
+            setTimeout(function() {
+                errorAlert.style.display = "none";
+            }, 500);
+        }
+
+        if (successAlert) {
+            successAlert.style.transition = "opacity 0.5s";
+            successAlert.style.opacity = 0;
+            setTimeout(function() {
+                successAlert.style.display = "none";
+            }, 500);
+        }
+    }, 6000);
+</script>
