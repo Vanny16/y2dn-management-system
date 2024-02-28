@@ -68,6 +68,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::delete('/delete_enrollee/{id}', [InfoUserController::class, 'delete_enrollee'])->name('delete_enrollee');
 	Route::get('/update_enrollee/{id}', [InfoUserController::class, 'edit'])->name('management.enrolled_student_update');
 	Route::put('/management/enrolled_student_update/{id}', [InfoUserController::class, 'update_enrollee']);
+	Route::put('/management/add_staff/', [InfoUserController::class, 'add_staff']);
+
 
 
 
@@ -77,7 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'guest'], function () {
-	Route::get('/register', [RegisterController::class, 'create']); 
+	Route::get('/register', [RegisterController::class, 'create']);
 	Route::post('/register', [RegisterController::class, 'store']);
 	Route::get('/login', [SessionsController::class, 'create']);
 	Route::post('/session', [SessionsController::class, 'store']);

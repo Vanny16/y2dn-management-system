@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\StudentEnrolled;
+use App\Models\UsersModel;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -137,6 +139,30 @@ class InfoUserController extends Controller
 
         // Redirect to the dashboard with a success message
         return redirect('/enrolled_students')->with('success', 'Student updated successfully!');
+    }
+
+    public function add_staff(Request $request)
+    {
+
+        dd($request->all());
+        // Validate the request data
+        $validatedData = $request->validate([
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'middle_name' => 'required',
+            'gender' => 'required',
+            'mobile_number' => 'required',
+            'user_name' => ['required', 'unique:users,user_name'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'address' => 'required',
+            'user_role' => 'required',
+
+        ]);
+
+    // Create a new user record
+    $newUser = UsersModel::create($validatedData);
+        // Redirect to the dashboard with a success message
+        return redirect('/user-management')->with('success', 'Staff Added successfully!');
     }
 
 
