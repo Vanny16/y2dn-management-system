@@ -35,6 +35,12 @@ class InfoUserController extends Controller
 
         // Check if the enrollee exists
         if ($enrollee) {
+            // Find and delete the corresponding record in StudentDocuments table
+            $studentDocuments = StudentDocuments::where('student_id', $enrollee->student_id)->first();
+            if ($studentDocuments) {
+                $studentDocuments->delete();
+            }
+
             // Delete the enrollee
             $enrollee->delete();
 

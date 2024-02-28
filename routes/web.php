@@ -6,6 +6,7 @@ use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\StudentDocumentsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -70,8 +71,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('/management/enrolled_student_update/{id}', [InfoUserController::class, 'update_enrollee']);
 	Route::put('/management/add_staff/', [InfoUserController::class, 'add_staff']);
 	Route::get('user-management', [InfoUserController::class, 'user_management'])->name('user-management');
-	Route::get('/student_documents', [InfoUserController::class, 'enrolled_students'])->name('enrolled_students');
-
+	Route::get('/student_documents', [StudentDocumentsController::class, 'student_documents'])->name('student_documents');
+ 
 
 
 

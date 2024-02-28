@@ -1,5 +1,3 @@
-<!-- enrolled_students.blade.php -->
-
 @extends('layouts.user_type.auth')
 
 @section('content')
@@ -11,10 +9,10 @@
                 <div class="card-header pb-0">
                     <div class="d-flex flex-row justify-content-between">
                         <div>
-                            <h5 class="mb-0">Enrolled Students</h5>
+                            <h5 class="mb-0">Student Documents</h5>
                         </div>
                         <a href="/enroll_student" class="btn bg-gradient-primary btn-sm mb-0" type="button">+&nbsp;
-                            Enroll Student</a>
+                            Upload Document</a>
                     </div>
                     @if(session('success'))
                     <!-- Success message display -->
@@ -42,15 +40,15 @@
                                     </th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Name
+                                        Last Name
                                     </th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Date Enrolled
+                                        First Name
                                     </th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Email
+                                        Middle Name
                                     </th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -59,51 +57,48 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($enrolledStudents as $enrolledStudent)
+                                @foreach ($studentDocuments as $studentDocuments)
                                 <tr>
                                     <td class="ps-4">
-                                        <p class="text-xs font-weight-bold mb-0">{{ $enrolledStudent->id }}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $studentDocuments->id }}</p>
                                     </td>
                                     <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{ $enrolledStudent->student_id }}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $studentDocuments->student_id }}</p>
                                     </td>
                                     <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">
-                                            {{ $enrolledStudent->last_name }}, {{ $enrolledStudent->first_name }} {{
-                                            substr($enrolledStudent->middle_name, 0, 1) }}.
+                                        <p class="text-xs font-weight-bold mb-0">{{ $studentDocuments->last_name }}</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{ $studentDocuments->first_name }}</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{ $studentDocuments->middle_name }}
                                         </p>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">{{
-                                            $enrolledStudent->created_at->format('d/m/y') }}</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{ $enrolledStudent->email }}</p>
                                     </td>
                                     <td style="text-align:center">
                                         <a class="btn btn-primary btn-sm view-btn text-white" data-toggle="modal"
-                                            data-target="#viewStudentModal{{ $enrolledStudent->id }}">
+                                            data-target="#viewStudentModal{{ $studentDocuments->id }}">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <a class="btn btn-secondary btn-sm view-btn text-white"
-                                            href="{{ route('management.enrolled_student_update', $enrolledStudent->id) }}">
+                                            href="{{ route('management.enrolled_student_update', $studentDocuments->id) }}">
                                             <i class="fas fa-user-edit"></i>
                                         </a>
                                         <a class="btn btn-danger btn-sm text-white" href="#"
                                             onclick="event.preventDefault(); 
                                                 if (confirm('Are you sure you want to delete this student record?')) 
-                                                    document.getElementById('delete-form-{{ $enrolledStudent->id }}').submit();">
+                                                    document.getElementById('delete-form-{{ $studentDocuments->id }}').submit();">
                                             <i class="fas fa-trash"></i>
                                         </a>
-                                        <form id="delete-form-{{ $enrolledStudent->id }}"
-                                            action="{{ route('delete_enrollee', $enrolledStudent->id) }}" method="POST"
+                                        <form id="delete-form-{{ $studentDocuments->id }}"
+                                            action="{{ route('delete_enrollee', $studentDocuments->id) }}" method="POST"
                                             style="display: none;">
                                             @csrf
                                             @method('DELETE')
                                         </form>
                                     </td>
                                 </tr>
-                                <div class="modal fade" id="viewStudentModal{{ $enrolledStudent->id }}" tabindex="-1"
+                                <div class="modal fade" id="viewStudentModal{{ $studentDocuments->id }}" tabindex="-1"
                                     aria-labelledby="viewStudentModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-lg">
                                         <div class="modal-content">
@@ -115,59 +110,23 @@
                                             </div>
                                             <div class="modal-body" id="modal-body-content">
                                                 <div class="row mb-2">
+                                                    <div class="col-6">
+                                                        <strong>Student ID:</strong>
+                                                        <span>{{ $studentDocuments->student_id }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-2">
                                                     <div class="col-4">
                                                         <strong>Last Name:</strong>
-                                                        <span>{{ $enrolledStudent->last_name }}</span>
+                                                        <span>{{ $studentDocuments->last_name }}</span>
                                                     </div>
                                                     <div class="col-4">
                                                         <strong>First Name:</strong>
-                                                        <span>{{ $enrolledStudent->first_name }}</span>
+                                                        <span>{{ $studentDocuments->first_name }}</span>
                                                     </div>
                                                     <div class="col-4">
                                                         <strong>Middle Name:</strong>
-                                                        <span>{{ $enrolledStudent->middle_name }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-2">
-                                                    <div class="col-6">
-                                                        <strong>Date Enrolled:</strong>
-                                                        <span>{{ $enrolledStudent->created_at->format('d/m/y') }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-2">
-                                                    <div class="col-6">
-                                                        <strong>Student ID:</strong>
-                                                        <span>{{ $enrolledStudent->student_id }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-2">
-                                                    <div class="col-12">
-                                                        <strong>Mobile Number:</strong>
-                                                        <span>{{ $enrolledStudent->mobile_number }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-2">
-                                                    <div class="col-12">
-                                                        <strong>Date of Birth:</strong>
-                                                        <span>{{ $enrolledStudent->dob }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-2">
-                                                    <div class="col-12">
-                                                        <strong>Address:</strong>
-                                                        <span>{{ $enrolledStudent->address }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-2">
-                                                    <div class="col-12">
-                                                        <strong>Department:</strong>
-                                                        <span>{{ $enrolledStudent->department }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-2">
-                                                    <div class="col-12">
-                                                        <strong>Program:</strong>
-                                                        <span>{{ $enrolledStudent->program }}</span>
+                                                        <span>{{ $studentDocuments->middle_name }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -184,8 +143,6 @@
     </div>
 </div>
 </div>
-
-
 
 @endsection
 
