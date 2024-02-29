@@ -32,6 +32,13 @@
                         </span>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
+                @elseif(session('error'))
+                <div class="m-3 alert alert-danger alert-dismissible fade show" id="alert-error" role="alert">
+                    <span class="alert-text text-white">
+                        {{ session('error') }}
+                    </span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
                 @endif
             </div>
 
@@ -47,8 +54,17 @@
                             <div>
                                 <h5 class="mb-0">All Users</h5>
                             </div>
-                            <a class="btn bg-gradient-primary btn-sm mb-0" data-toggle="modal"
-                                data-target="#addStaffModal">+&nbsp; Add Staff</a>
+                            <div class="">
+                                <a class="btn bg-gradient-primary btn-sm " data-toggle="modal"
+                                data-target="#addStaffModal"> <i class="fas fa-user"></i>&nbsp; Add Staff
+                            </a>
+
+                            <a class="btn bg-gradient-warning btn-sm" data-toggle="modal"
+                            data-target="#addRoleModal"><i class="fas fa-user-shield"></i>&nbsp; Create Role
+                        </a>
+                            </div>
+
+
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -56,12 +72,6 @@
                             <table class="table align-items-center mb-0">
                                 <thead>
                                     <tr>
-                                        {{-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        ID
-                                    </th> --}}
-                                        {{-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Photo
-                                    </th> --}}
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Name
@@ -129,7 +139,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="modal fade" id="addStaffModal" tabindex="-1" aria-labelledby="viewStudentModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -284,6 +293,40 @@
         </div>
     </div>
 
+    <div class="modal fade" id="addRoleModal" tabindex="-1" aria-labelledby="viewStudentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header  bg-gradient-warning">
+                    <h5 class="modal-title" id="viewStudentModalLabel" style="color: white;">ADD ROLE</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-body-content">
+                    <form method="POST" action="/management/add_role/" class="form-container" id="updateStudentForm">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="form-group">
+                            <label for="user_role" class="form-control-label">{{ 'Role' }}</label>
+                            <div class="@error('user_role') border border-danger rounded-3 @enderror">
+                                <input class="form-control" type="text" placeholder="ex.Admin..."
+                                    id="user_role" name="user_role" value="" required>
+                                @error('user_role')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn bg-gradient-warning btn-md">{{ 'Save' }}</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 @endsection
 
 <!-- Add these links to the head section of your HTML -->
@@ -291,25 +334,26 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script>
-    // Automatically close alerts after 6 seconds
+    // Automatically close alerts after 5 seconds with a fading effect
     window.setTimeout(function() {
         var errorAlert = document.getElementById('alert-error');
         var successAlert = document.getElementById('alert-success');
 
         if (errorAlert) {
-            errorAlert.style.transition = "opacity 0.5s";
+            errorAlert.style.transition = "opacity 2s"; // Adjust the duration as needed
             errorAlert.style.opacity = 0;
             setTimeout(function() {
                 errorAlert.style.display = "none";
-            }, 500);
+            }, 2000); // Adjust the duration to match the transition duration
         }
 
         if (successAlert) {
-            successAlert.style.transition = "opacity 0.5s";
+            successAlert.style.transition = "opacity 2s"; // Adjust the duration as needed
             successAlert.style.opacity = 0;
             setTimeout(function() {
                 successAlert.style.display = "none";
-            }, 500);
+            }, 000); // Adjust the duration to match the transition duration
         }
-    }, 6000);
+    }, 3000); // Adjust the total duration as needed
 </script>
+

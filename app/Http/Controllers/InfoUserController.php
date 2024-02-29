@@ -173,9 +173,6 @@ class InfoUserController extends Controller
 
     public function add_staff(Request $request)
     {
-
-        // dd($request->all());
-        // Validate the request data
         $validatedData = $request->validate([
             'last_name' => 'required',
             'first_name' => 'required',
@@ -212,6 +209,45 @@ class InfoUserController extends Controller
 
         // Pass data to the view
         return view('management.user-management', compact('users_list', 'roles_list'));
+    }
+
+    public function user_roles()
+    {
+        // Fetch data from the database
+        // $users_list = UsersModel::all();
+        $users_list = DB::table('user_roles')
+            ->join('user_roles', 'user_roles.id', '=', 'users.user_role')
+            ->get();
+
+        $roles_list = DB::table('user_roles')
+            ->get();
+
+
+        // Pass data to the view
+        return view('management.user-management', compact('users_list', 'roles_list'));
+    }
+
+    public function add_role(request $request)
+    {
+        $role_name = $request->input('user_role');
+
+        $check_exist = DB::table('user_roles')
+        ->where('user_role', $role_name)
+        ->first();
+
+        if($check_exist == null){
+            $save_role = DB::table('user_roles')
+            ->insert([
+                'user_role' =>  $role_name,
+            ]);
+            return redirect('user-management')->with('success', 'Role added Successfully!');
+
+        }
+        else{
+            return redirect('user-management')->with('error', 'Role already exist!');
+        }
+
+
     }
 
 
