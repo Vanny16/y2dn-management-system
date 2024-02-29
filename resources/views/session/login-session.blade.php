@@ -37,6 +37,13 @@
                       <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
                       <label class="form-check-label" for="rememberMe">Remember me</label>
                     </div>
+                    <div class="form-group">
+                      {!! NoCaptcha::renderJs() !!}
+                      {!! NoCaptcha::display() !!}
+                      @error('g-recaptcha-response')
+                          <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                      @enderror
+                  </div>
                     <div class="text-center">
                       <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
                     </div>
