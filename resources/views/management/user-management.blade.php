@@ -42,7 +42,7 @@
                     <div class="card-header pb-0">
                         <div class="d-flex flex-row justify-content-between">
                             <div>
-                                <h5 class="mb-0">All Users</h5>
+                                <h5 class="mb-0">Staffs</h5>
                             </div>
                             <div class="">
                                 <a class="btn bg-gradient-primary btn-sm " data-toggle="modal"
@@ -89,31 +89,31 @@
                                         @foreach ($users_list as $user)
                                             <tr>
                                                 <td class="text-center">
-                                                    <p class="text-sm font-weight-bold mb-0">{{ $user->last_name }},
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $user->last_name }},
                                                         {{ $user->first_name }}</p>
                                                 </td>
                                                 <td class="text-center">
-                                                    <p class="text-sm font-weight-bold mb-0">{{ $user->email }}</p>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $user->email }}</p>
                                                 </td>
                                                 <td class="text-center">
-                                                    <p class="text-sm font-weight-bold mb-0">{{ $user->user_role }}</p>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $user->user_role }}</p>
                                                 </td>
 
                                                 <td class="text-center">
-                                                    <p class="text-sm font-weight-bold mb-0">{{ $user->created_at }}</p>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $user->created_at }}</p>
                                                 </td>
 
                                                 <td style="text-align:center">
-                                                    <a class="btn btn-primary btn-xs view-btn text-white" data-toggle="modal"
+                                                    <a class="btn btn-primary btn-sm view-btn text-white" data-toggle="modal"
                                                         data-target="#viewStudentModal{{ $user->id }}">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
-                                                    <a class="btn btn-secondary btn-xs view-btn text-white"
+                                                    <a class="btn btn-secondary btn-sm view-btn text-white"
                                                         href="{{ route('management.enrolled_student_update', $user->id) }}">
                                                         <i class="fas fa-user-edit"></i>
                                                     </a>
 
-                                                    <a class="btn btn-danger btn-xs view-btn text-white"
+                                                    <a class="btn btn-danger btn-sm view-btn text-white"
                                                     href="{{ route('management.enrolled_student_update', $user->id) }}">
                                                     <i class="fas fa-trash"></i>
                                                 </a>
