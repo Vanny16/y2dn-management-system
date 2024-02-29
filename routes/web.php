@@ -10,6 +10,9 @@ use App\Http\Controllers\StudentDocumentsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DatabaseController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -102,4 +105,9 @@ Route::group(['middleware' => 'guest'], function () {
 Route::get('/login', function () {
 	return view('session/login-session');
 })->name('login');
+
+
+Route::post('/backup-database', [DatabaseController::class, 'backupDatabase']);
+
+
 
