@@ -3,15 +3,6 @@
 @section('content')
 
     <div>
-        {{-- <div class="alert alert-secondary mx-4" role="alert">
-        <span class="text-white">
-            <strong>Add, Edit, Delete features are not functional!</strong> This is a
-            <strong>PRO</strong> feature! Click <strong>
-            <a href="https://www.creative-tim.com/live/soft-ui-dashboard-pro-laravel" target="_blank" class="text-white">here</a></strong>
-            to see the PRO product!
-        </span>
-    </div> --}}
-
         <div class="row">
             <div class="col-12">
                 @if ($errors->any())
@@ -25,7 +16,6 @@
                 @endif
 
                 @if (session('success'))
-                    <!-- Success message display -->
                     <div class="m-3 alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
                         <span class="alert-text text-white">
                             {{ session('success') }}

@@ -91,8 +91,8 @@
                                             <i class="fas fa-user-edit"></i>
                                         </a>
                                         <a class="btn btn-danger btn-sm text-white" href="#"
-                                            onclick="event.preventDefault(); 
-                                                if (confirm('Are you sure you want to delete this student record?')) 
+                                            onclick="event.preventDefault();
+                                                if (confirm('Are you sure you want to delete this student record?'))
                                                     document.getElementById('delete-form-{{ $enrolledStudent->id }}').submit();">
                                             <i class="fas fa-trash"></i>
                                         </a>
