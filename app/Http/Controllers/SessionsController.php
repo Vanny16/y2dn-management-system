@@ -30,7 +30,13 @@ class SessionsController extends Controller
 
         if (Auth::attempt($attributes)) {
             session()->regenerate();
+            if(auth()->user()->user_role == 4)
+            return redirect('profile')->with(['success' => 'You are logged in.']);
+        else{
             return redirect('dashboard')->with(['success' => 'You are logged in.']);
+
+        }
+
         } else {
             return back()->withErrors(['email' => 'Email or password invalid.']);
         }
