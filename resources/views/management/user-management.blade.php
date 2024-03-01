@@ -199,7 +199,7 @@
                                 <div class="form-group">
                                     <label for="Password" class="form-control-label">{{ __('Password') }}</label>
                                     <div class="@error('user_name') border border-danger rounded-3 @enderror">
-                                        <input class="form-control" type="text" placeholder="password" id="password"
+                                        <input class="form-control" type="password" placeholder="password" id="password"
                                             name="password" value="" required>
                                         @error('password')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
