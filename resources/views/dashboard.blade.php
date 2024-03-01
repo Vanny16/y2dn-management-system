@@ -9,7 +9,7 @@
           <div class="row">
             <div class="col-8">
               <div class="numbers">
-                <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Money</p>
+                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total </p>
                 <h5 class="font-weight-bolder mb-0">
                   $53,000
                   <span class="text-success text-sm font-weight-bolder">+55%</span>
@@ -213,10 +213,10 @@
     <div class="col-lg-7">
       <div class="card z-index-2">
         <div class="card-header pb-0">
-          <h6>Sales overview</h6>
+          <h6>Enrollment overview</h6>
           <p class="text-sm">
             <i class="fa fa-arrow-up text-success"></i>
-            <span class="font-weight-bold">4% more</span> in 2021
+            <span class="font-weight-bold">4% more</span> in 2024
           </p>
         </div>
         <div class="card-body p-3">

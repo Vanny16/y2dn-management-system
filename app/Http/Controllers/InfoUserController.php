@@ -199,7 +199,7 @@ class InfoUserController extends Controller
 
         ]);
         $validatedData['password'] = Hash::make($request->input('password'));
-        $validatedData['created_at'] = Carbon::parse('2022-01-01 12:00:00');
+        $validatedData['created_at'] = now();
 
         // Create a new user record
         DB::table('users')->insert($validatedData);
@@ -251,6 +251,10 @@ class InfoUserController extends Controller
             $save_role = DB::table('user_roles')
             ->insert([
                 'user_role' =>  $role_name,
+                'status' => 1,
+                'created_at' => now(),
+
+
             ]);
             return redirect('user-management')->with('success', 'Role added Successfully!');
 

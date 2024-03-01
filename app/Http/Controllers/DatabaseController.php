@@ -33,7 +33,7 @@ class DatabaseController extends Controller
                     'filename' => $backupFileName,
                     'backup_datetime' => $currentDateTime,
                     'created_at' =>  $currentDateTime,
-                    'backuped_by' => $userId,
+                    // 'backuped_by' => $userId,
                 ]);
 
                 return redirect()->back()->with('success', 'Database backup completed');
