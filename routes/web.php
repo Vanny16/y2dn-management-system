@@ -74,6 +74,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('/management/enrolled_student_update/{id}', [InfoUserController::class, 'update_enrollee']);
 	Route::put('/management/add_staff/', [InfoUserController::class, 'add_staff']);
 	Route::put('/management/add_role/', [InfoUserController::class, 'add_role']);
+	Route::get('/backup', [InfoUserController::class, 'backup'])->name('backup');
+
 
 	Route::get('user-management', [InfoUserController::class, 'user_management'])->name('user-management');
 	Route::get('/student_documents', [StudentDocumentsController::class, 'student_documents'])->name('student_documents');

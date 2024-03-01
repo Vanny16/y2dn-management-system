@@ -57,6 +57,15 @@ class InfoUserController extends Controller
         return view('management.enroll_student');
     }
 
+    public function backup()
+    {
+        $backup_history = DB::table('backup_logs')
+        ->join('users','users.id','=','backup_logs.backuped_by')
+        ->get();
+
+        return view('backup',compact('backup_history'));
+    }
+
     public function save_enrollee(Request $request)
     {
         // Validate the request data
