@@ -1,24 +1,56 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
-  <div class="row mt-4">
+
+
+<div class="row">
+    <div class="col-12">
+        @if ($errors->any())
+            <!-- Error message display -->
+            <div class="mt-3 alert alert-primary alert-dismissible fade show" role="alert" id="alert-error">
+                <span class="alert-text text-white">
+                    {{ $errors->first() }}
+                </span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if (session('success'))
+            <div class="m-3 alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
+                <span class="alert-text text-white">
+                    {{ session('success') }}
+                </span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @elseif(session('error'))
+        <div class="m-3 alert alert-danger alert-dismissible fade show" id="alert-error" role="alert">
+            <span class="alert-text text-white">
+                {{ session('error') }}
+            </span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+    </div>
+</div>
+  <div class="row">
     <div class="col-lg-7 mb-lg-0 mb-4">
       <div class="card">
         <div class="card-body p-3">
           <div class="row">
             <div class="col-lg-6">
               <div class="d-flex flex-column h-100">
-                <p class="mb-1 pt-2 text-bold">Built by developers</p>
-                <h5 class="font-weight-bolder">Soft UI Dashboard</h5>
-                <p class="mb-5">From colors, cards, typography to complex elements, you will find the full documentation.</p>
+                {{-- <p class="mb-1 pt-2 text-bold">Built by developers</p> --}}
+                <h5 class="font-weight-bolder">Database Backup</h5>
+                @isset($backup_history)
+                <div class="mb-1"><b>Last Backup:</b> {{ \Carbon\Carbon::parse($backup_history->backup_datetime)->format('Y-m-d') }}</div>
+                <div class="mb-1"><b>File Name:</b> {{ $backup_history->filename }}</div>
+                <div class="mb-5"><b>Back up by:</b> {{ $backup_history->first_name}} {{ $backup_history->middle_name}}, {{ $backup_history->last_name}} </div>
+                @endisset
+
                 <form action="{{ url('/backup-database') }}" method="post">
                     @csrf
-                    <button class="btn btn-primary" type="submit">Backup Database</button>
+                    <button class="btn btn-primary" type="submit">Backup Now</button>
                 </form>
-                {{-- <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="javascript:;">
-                  Read More
-                  <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
-                </a> --}}
               </div>
             </div>
             <div class="col-lg-5 ms-auto text-center mt-5 mt-lg-0">
@@ -704,4 +736,30 @@
     }
   </script>
 @endpush
+
+
+<script>
+    // Automatically close alerts after 5 seconds with a fading effect
+    window.setTimeout(function() {
+        var errorAlert = document.getElementById('alert-error');
+        var successAlert = document.getElementById('alert-success');
+
+        if (errorAlert) {
+            errorAlert.style.transition = "opacity 2s"; // Adjust the duration as needed
+            errorAlert.style.opacity = 0;
+            setTimeout(function() {
+                errorAlert.style.display = "none";
+            }, 2000); // Adjust the duration to match the transition duration
+        }
+
+        if (successAlert) {
+            successAlert.style.transition = "opacity 2s"; // Adjust the duration as needed
+            successAlert.style.opacity = 0;
+            setTimeout(function() {
+                successAlert.style.display = "none";
+            }, 2000); // Adjust the duration to match the transition duration
+        }
+    }, 3000); // Adjust the total duration as needed
+</script>
+
 

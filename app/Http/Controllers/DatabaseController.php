@@ -31,8 +31,8 @@ class DatabaseController extends Controller
                 // Insert the backup log
                 DB::table('backup_logs')->insert([
                     'filename' => $backupFileName,
-                    'backup_datetime' => now(),
-                    'created_at' => now(),
+                    'backup_datetime' => $currentDateTime,
+                    'created_at' =>  $currentDateTime,
                     'backuped_by' => $userId,
                 ]);
 

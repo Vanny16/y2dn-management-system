@@ -61,7 +61,10 @@ class InfoUserController extends Controller
     {
         $backup_history = DB::table('backup_logs')
         ->join('users','users.id','=','backup_logs.backuped_by')
-        ->get();
+        ->select('backup_logs.*','users.*')
+        ->orderBy('backup_logs.backup_datetime', 'desc')
+
+        ->first();
 
         return view('backup',compact('backup_history'));
     }
