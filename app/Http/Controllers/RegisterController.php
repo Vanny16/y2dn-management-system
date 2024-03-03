@@ -17,18 +17,22 @@ class RegisterController extends Controller
     public function store()
     {
         $attributes = request()->validate([
-            'name' => ['required', 'max:50'],
-            'email' => ['required', 'email', 'max:50', Rule::unique('users', 'email')],
+            'last_name' => ['required', 'max:255'],
+            'first_name' => ['required', 'max:255'],
+            'middle_name' => ['max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')],
+            'phone' => ['max:255'],
             'password' => ['required', 'min:5', 'max:20'],
             'agreement' => ['accepted']
         ]);
-        $attributes['password'] = bcrypt($attributes['password'] );
 
-        
+        $attributes['password'] = bcrypt($attributes['password']);
+        $attributes['user_role'] = 4; // Set user_role to 4 for students
 
         session()->flash('success', 'Your account has been created.');
         $user = User::create($attributes);
-        Auth::login($user); 
+        Auth::login($user);
+
         return redirect('/dashboard');
     }
 }

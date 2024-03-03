@@ -20,7 +20,7 @@
                 Alec Thompson
               </h5>
               <p class="mb-0 font-weight-bold text-sm">
-                CEO / Co-Founder
+                {{ $user->first_name }} {{ $user->last_name }}
               </p>
             </div>
           </div>

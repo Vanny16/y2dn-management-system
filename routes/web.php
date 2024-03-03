@@ -37,9 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('billing');
 	})->name('billing');
 
-	Route::get('profile', function () {
-		return view('profile');
-	})->name('profile');
+	Route::get('/profile', [InfoUserController::class, 'user'])->name('profile');
 
 	Route::get('rtl', function () {
 		return view('rtl');
@@ -95,7 +93,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => 'guest'], function () {
 	Route::get('/register', [RegisterController::class, 'create']);
-	Route::post('/register', [RegisterController::class, 'store']);
+	Route::post('/register', [RegisterController::class, 'store'])->name('register');
 	Route::get('/login', [SessionsController::class, 'create']);
 	Route::post('/session', [SessionsController::class, 'store']);
 	Route::get('/login/forgot-password', [ResetController::class, 'create']);

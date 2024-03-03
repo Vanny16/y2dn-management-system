@@ -266,5 +266,12 @@ class InfoUserController extends Controller
 
     }
 
+    public function user()
+    {
+        return view('profile', [
+            'user' => auth()->user()
+        ]);
+    }
+
 
 }
