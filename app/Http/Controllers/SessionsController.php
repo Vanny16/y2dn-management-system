@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
+use Illuminate\Support\Facades\ThrottleAttemptsException;
+
 
 
 class SessionsController extends Controller
@@ -25,7 +27,6 @@ class SessionsController extends Controller
             'g-recaptcha-response.captcha' => 'Captcha validation failed, please try again.',
         ]);
 
-        // Remove the 'g-recaptcha-response' from the attributes
         unset($attributes['g-recaptcha-response']);
 
         if (Auth::attempt($attributes)) {
