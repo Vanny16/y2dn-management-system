@@ -99,7 +99,7 @@
                 About Me:
               </p>
               <p>
-                Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality).
+                {{ $user->about_me }}
               </p>
               <ul class="list-group">
                 <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; {{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</li>
@@ -230,6 +230,10 @@
           <div class="mb-3">
             <label for="location" class="form-label">Location</label>
             <input type="text" class="form-control" id="location" value="{{ $user->location }}">
+          </div>
+          <div class="mb-3">
+            <label for="aboutMe" class="form-label">About Me</label>
+            <textarea class="form-control" id="aboutMe">{{ $user->about_me }}</textarea>
           </div>
           <button type="button" class="btn btn-primary">Save Changes</button>
         </form>
