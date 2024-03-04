@@ -268,6 +268,7 @@ class InfoUserController extends Controller
     public function user()
     {
         $user = auth()->user();
+        // dd( $user);
 
 
         return view('profile', [

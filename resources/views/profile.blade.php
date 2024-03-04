@@ -70,22 +70,25 @@
             <div class="card-body">
                 <h6 class="text-uppercase text-body text-xs font-weight-bolder">Account</h6>
                 <ul class="list-group">
-                    <li class="list-group-item border-0 ps-0 pt-0 text-sm">
-                        <strong class="text-dark">Role:</strong> &nbsp; Alec M. Thompson
-                    </li>
+                    @php
+                    $userRole = DB::table('user_roles')->where('id', $user->user_role)->first();
+                @endphp
 
+                <li class="list-group-item border-0 ps-0 pt-0 text-sm">
+                    <strong class="text-dark">Role:</strong> &nbsp;{{ $userRole->user_role }}
+                </li>
                     <li class="list-group-item border-0 ps-0 pt-0 text-sm">
-                        <strong class="text-dark">Email:</strong> &nbsp; Alec M. Thompson
+                        <strong class="text-dark">Email:</strong> &nbsp; A{{ $user->email }}
                         <i class="fas fa-user-edit text-secondary text-sm float-end" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Email"></i>
                     </li>
 
                     <li class="list-group-item border-0 ps-0 pt-0 text-sm">
-                        <strong class="text-dark">Password:</strong> &nbsp; Alec M. Thompson
+                        <strong class="text-dark">Password:</strong> &nbsp; ********
                         <i class="fas fa-user-edit text-secondary text-sm float-end" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Password"></i>
                     </li>
 
                     <li class="list-group-item border-0 ps-0 pt-0 text-sm">
-                        <strong class="text-dark">Date Created:</strong> &nbsp; Alec M. Thompson
+                        <strong class="text-dark">Date Created:</strong> &nbsp; {{ $user->created_at }}
                     </li>
 
                     <li class="list-group-item border-0 px-0">
