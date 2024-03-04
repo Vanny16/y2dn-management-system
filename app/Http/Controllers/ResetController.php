@@ -11,7 +11,7 @@ class ResetController extends Controller
     public function create()
     {
         return view('session/reset-password/sendEmail');
-        
+
     }
 
     public function sendEmail(Request $request)
@@ -33,8 +33,9 @@ class ResetController extends Controller
         }
     }
 
-    public function resetPass($token)
+    public function resetPass(Request $request)
     {
-        return view('session/reset-password/resetPassword', ['token' => $token]);
+        dd($request->all());
+        return view('session/reset-password/resetPassword');
     }
 }
