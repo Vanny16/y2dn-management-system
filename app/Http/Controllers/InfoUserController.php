@@ -265,12 +265,47 @@ class InfoUserController extends Controller
 
 
     }
-
     public function user()
     {
+        $user = auth()->user();
+
+
         return view('profile', [
-            'user' => auth()->user()
+            'user' => $user
         ]);
+    }
+
+
+    public function updateProfile(Request $request)
+    {
+
+        $user = auth()->user();
+
+        // Validate the request data
+        $request->validate([
+            'first_name' => 'required',
+            'middle_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'gender' => 'required',
+            'phone' => 'required',
+            'location' => 'required',
+            'about_me' => 'required',
+        ]);
+
+        // Update user profile
+        $user->update([
+            'first_name' => $request->input('first_name'),
+            'middle_name' => $request->input('middle_name'),
+            'last_name' => $request->input('last_name'),
+            'email' => $request->input('email'),
+            'gender' => $request->input('gender'),
+            'phone' => $request->input('phone'),
+            'location' => $request->input('location'),
+            'about_me' => $request->input('about_me'),
+        ]);
+
+        return redirect('profile')->with('success', 'Profile updated successfully!');
     }
 
 
