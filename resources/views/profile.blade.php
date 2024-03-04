@@ -78,13 +78,13 @@
                     <strong class="text-dark">Role:</strong> &nbsp;{{ $userRole->user_role }}
                 </li>
                     <li class="list-group-item border-0 ps-0 pt-0 text-sm">
-                        <strong class="text-dark">Email:</strong> &nbsp; A{{ $user->email }}
-                        <i class="fas fa-user-edit text-secondary text-sm float-end" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Email"></i>
+                        <strong class="text-dark">Email:</strong> &nbsp; {{ $user->email }}
+                        <a href="#" class="fas fa-user-edit text-secondary text-sm float-end"  data-bs-toggle="modal" data-bs-target="#editEmailModal" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Email"></a>
                     </li>
 
                     <li class="list-group-item border-0 ps-0 pt-0 text-sm">
                         <strong class="text-dark">Password:</strong> &nbsp; ********
-                        <i class="fas fa-user-edit text-secondary text-sm float-end" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Password"></i>
+                        <a href="#" class="fas fa-user-edit text-secondary text-sm float-end"  data-bs-toggle="modal" data-bs-target="#editPasswordModal" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Password"></a>
                     </li>
 
                     <li class="list-group-item border-0 ps-0 pt-0 text-sm">
@@ -198,6 +198,54 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="editEmailModal" tabindex="-1" aria-labelledby="editEmailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editEmailModalLabel">Edit Email</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Add your form for editing email here -->
+                <form>
+                    <div class="mb-3">
+                        <label for="newEmail" class="form-label">New Email:</label>
+                        <input type="email" class="form-control" id="newEmail" name="newEmail" placeholder="Enter new email" required>
+                    </div>
+                    <!-- Add any other necessary form fields -->
+
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Password Modal -->
+<div class="modal fade" id="editPasswordModal" tabindex="-1" aria-labelledby="editPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editPasswordModalLabel">Edit Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Add your form for editing password here -->
+                <form>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">New Password:</label>
+                        <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Enter new password" required>
+                    </div>
+                    <!-- Add any other necessary form fields -->
+
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
     <div class="modal-dialog">
