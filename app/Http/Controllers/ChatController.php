@@ -19,11 +19,11 @@ class ChatController extends Controller
         $user = auth()->user();
 
         $request->validate([
-            'recipient_id_2' => 'required',
+            'recipient_id' => 'required',
             'message' => 'required|string',
         ]);
 
-        dd($request->input('recipient_id_2'));
+
         DB::table('chats')
             ->insert([
                 'cht_from' => $user->id,
@@ -52,7 +52,8 @@ class ChatController extends Controller
             ->get();
 
         // Return the conversation data as JSON response
-        return response()->json($conversation);
+        // return response()->json($conversation);
+        return redirect()->back()->with('success', 'Message sent successfully.');
     }
 
     public function loadConversation(Request $request)
@@ -116,6 +117,7 @@ class ChatController extends Controller
         //     'recipient_id' => $recipientId
         // ];
         return response()->json($conversation);
+        // return response()->json($responseData);
         // return response()->json(['status' => 'success', 'message' => 'Route hit successfully']);
         // return view('profile', [
         //     'user' => $user,

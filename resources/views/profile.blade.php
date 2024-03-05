@@ -138,7 +138,7 @@
                   <p class="mb-0 text-xs">{{ $chat->cht_message }}</p>
                 </div>
                 <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" data-toggle="modal"
-                  data-target="#chatModal{{ $chat->cht_from }}" data-chat-to="{{ $chat->cht_from }}">Reply</a>
+                  data-target="#chatModal{{ $chat->cht_to }}" data-chat-to="{{ $chat->cht_to }}">Reply</a>
               </li>
               {{-- ! --}}
               {{-- <div class="modal fade" id="chatModal{{ $chat->cht_id }}" tabindex="-1"
@@ -163,7 +163,7 @@
               </div> --}}
               {{-- ! --}}
               {{-- ? Modal for conversations/chats with selected user--}}
-              <div class="modal fade" id="chatModal{{ $chat->cht_from }}" tabindex="-1" role="dialog"
+              <div class="modal fade" id="chatModal{{ $chat->cht_to }}" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -179,7 +179,7 @@
                     <div class="modal-footer">
                       <form id="chatForm" action="{{ route('send-chat') }}" method="post">
                         @csrf
-                        <input type="hidden" name="recipient_id" value="{{ $chat->cht_to }}">
+                        <input type="hidden" name="recipient_id" value="{{ $chat->cht_from }}">
                         <div class="d-flex mx-auto">
                           <input class="form-control me-2" style="flex-basis: 100%" name="message" id="message"
                             required></input>
@@ -384,7 +384,7 @@
                     var messageElement = $('<p></p>').text(chat.cht_message);
 
                     // Add a CSS class based on the value of cht_from
-                    if (chat.cht_from === {{ auth()->id() }}) {
+                    if (chat.cht_from == {{ auth()->id() }}) {
                         messageElement.addClass('text-end');
                     } else {
                         messageElement.addClass('text-start');
