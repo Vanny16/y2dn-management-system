@@ -332,7 +332,7 @@
             errorAlert.style.opacity = 0;
             setTimeout(function() {
                 errorAlert.style.display = "none";
-            }, 2000); // Adjust the duration to match the transition duration
+            }, 3000); // Adjust the duration to match the transition duration
         }
 
         if (successAlert) {
@@ -340,7 +340,7 @@
             successAlert.style.opacity = 0;
             setTimeout(function() {
                 successAlert.style.display = "none";
-            }, 000); // Adjust the duration to match the transition duration
+            }, 3000); // Adjust the duration to match the transition duration
         }
     }, 3000); // Adjust the total duration as needed
 </script>

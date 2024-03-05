@@ -74,7 +74,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('/management/add_staff/', [InfoUserController::class, 'add_staff']);
 	Route::put('/management/add_role/', [InfoUserController::class, 'add_role']);
 	Route::get('/backup', [InfoUserController::class, 'backup'])->name('backup');
-
+	Route::post('/update-profile', [InfoUserController::class, 'updateProfile'])->name('update.profile');
 	// ? CHATS
 	Route::post('/send-chat', [ChatController::class, 'sendChat'])->name('send-chat');
 	Route::get('/conversation', [ChatController::class, 'loadConversation'])->name('load-conversation');
@@ -99,6 +99,7 @@ Route::group(['middleware' => 'guest'], function () {
 	Route::get('/login/forgot-password', [ResetController::class, 'create']);
 	Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
 	Route::get('/reset-password', [ResetController::class, 'resetPass'])->name('password.reset');
+
 
 });
 
