@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller; // Add this line
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
@@ -74,6 +75,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('/management/add_role/', [InfoUserController::class, 'add_role']);
 	Route::get('/backup', [InfoUserController::class, 'backup'])->name('backup');
 
+	// ? CHATS
+	Route::post('/send-chat', [ChatController::class, 'sendChat'])->name('send-chat');
+	Route::get('/conversation', [ChatController::class, 'loadConversation'])->name('load-conversation');
 
 	Route::get('user-management', [InfoUserController::class, 'user_management'])->name('user-management');
 	Route::get('/student_documents', [StudentDocumentsController::class, 'student_documents'])->name('student_documents');
@@ -81,10 +85,6 @@ Route::group(['middleware' => 'auth'], function () {
 		->name('update_student_documents');
 	Route::get('/download_student_document/{id}/{type}', [StudentDocumentsController::class, 'downloadStudentDocument'])
 		->name('download_student_document');
-
-
-
-
 
 	Route::get('/login', function () {
 		return view('dashboard');
