@@ -137,33 +137,26 @@
                   <h6 class="mb-0 text-sm">{{ $chat->first_name }} {{ $chat->last_name }}</h6>
                   <p class="mb-0 text-xs">{{ $chat->cht_message }}</p>
                 </div>
-                <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" data-toggle="modal"
-                  data-target="#chatModal{{ $chat->cht_to }}" data-chat-to="{{ $chat->cht_to }}">Reply</a>
+                <button class="btn btn-link pe-3 ps-0 mb-0 ms-auto" data-bs-toggle="offcanvas"
+                  data-bs-target="#chatModal{{ $chat->cht_to }}" data-chat-to="{{ $chat->cht_to }}">Reply</button>
               </li>
-              {{-- ! --}}
-              {{-- <div class="modal fade" id="chatModal{{ $chat->cht_id }}" tabindex="-1"
-                aria-labelledby="viewStudentModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header  bg-gradient-warning">
-                      <h5 class="modal-title" id="viewStudentModalLabel" style="color: white;">ADD ROLE</h5>
-                      <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="modal-body-content">
-                      <form method="POST" action="/management/add_role/" class="form-container" id="updateStudentForm">
-                        @csrf
-                        <input type="hidden" name="recipient_id" value="{{ $chat->cht_to }}">
-                        <textarea class="form-control" name="message" rows="3" required></textarea>
-                        <button type="submit" class="btn btn-primary mt-2">Send</button>
-                      </form>
 
-                    </div>
-                  </div>
+              {{-- ! OFF CANVAS LEFT--}}
+              <div class="offcanvas offcanvas-start" tabindex="-1" id="chatModal{{ $chat->cht_to }}"
+                aria-labelledby="offcanvasBothLabel" data-bs-scroll="true">
+                <div class="offcanvas-header">
+                  <h5 id="offcanvasBothLabel" class="offcanvas-title">{{ $chat->first_name }} {{ $chat->last_name }}</h5>
+                  <button type="button" class="close text-reset text-danger" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
                 </div>
-              </div> --}}
+                <div class="offcanvas-body my-auto mx-0 flex-grow-0">
+
+                </div>
+              </div>
               {{-- ! --}}
+
               {{-- ? Modal for conversations/chats with selected user--}}
-              <div class="modal fade" id="chatModal{{ $chat->cht_to }}" tabindex="-1" role="dialog"
+              {{-- <div class="modal fade" id="chatModal{{ $chat->cht_to }}" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -174,7 +167,7 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                     
+
                     </div>
                     <div class="modal-footer">
                       <form id="chatForm" action="{{ route('send-chat') }}" method="post">
@@ -189,7 +182,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> --}}
               @empty
               <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">No recent chats found.</li>
               @endforelse
@@ -376,7 +369,7 @@
             success: function(response) {
               console.log(response); // Log the response to ensure it's what you expect.
 
-              var modalBody = $('#chatModal' + recipientId + ' .modal-body'); // Adjust this selector based on your actual modal ID and structure.
+              var modalBody = $('#chatModal' + recipientId + ' .offcanvas-body'); // Adjust this selector based on your actual modal ID and structure.
               modalBody.empty(); // Clear existing content.
 
               if (response.length > 0) {
@@ -395,10 +388,9 @@
               } else {
                   modalBody.text('No conversation found.'); // Display a message if no conversation exists.
               }
-
               // Assuming you've correctly initialized Bootstrap's modal via JavaScript or data attributes.
-              var myModal = new bootstrap.Modal(document.getElementById('chatModal' + recipientId)); // Adjust this ID based on your modal's ID.
-              myModal.hide(); // Show the modal with the updated content.
+              var myModal = new bootstrap.Offcanvas(document.getElementById('chatModal' + recipientId)); // Adjust this ID based on your modal's ID.
+              myModal.show(); // Show the modal with the updated content.
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
