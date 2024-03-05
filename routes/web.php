@@ -75,6 +75,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('/management/add_role/', [InfoUserController::class, 'add_role']);
 	Route::get('/backup', [InfoUserController::class, 'backup'])->name('backup');
 	Route::post('/update-profile', [InfoUserController::class, 'updateProfile'])->name('update.profile');
+	Route::post('/change_email', [InfoUserController::class, 'change_email']);
+	Route::post('/change_password', [InfoUserController::class, 'change_password']);
+
+
 	// ? CHATS
 	Route::post('/send-chat', [ChatController::class, 'sendChat'])->name('send-chat');
 	Route::get('/conversation', [ChatController::class, 'loadConversation'])->name('load-conversation');

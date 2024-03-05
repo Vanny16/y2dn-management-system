@@ -359,5 +359,73 @@ class InfoUserController extends Controller
     }
 
 
+    public function change_email(Request $request)
+    {
+        $userId = Auth::id();
+        $new_email = $request->input('newEmail');
+        $password = $request->input('password');
+        $user = DB::table('users')
+        ->where('id', $userId)
+        ->first();
+
+    if ($user && Hash::check($password, $user->password)) {
+        $request->validate([
+            'newEmail' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($userId),
+            ],
+        ]);
+
+        DB::table('users')
+        ->where('id', $userId)
+        ->update(['email' => $new_email]);
+
+        return redirect('profile')->with('success', 'Email Update Successfully!');
+
+    }else {
+
+        return redirect()->back()->with('error', 'Incorrect password');
+    }
+}
+
+public function change_password(Request $request)
+    {
+        $userId = Auth::id();
+        $currentPassword = $request->input('currentPassword');
+        $newPassword = $request->input('newPassword');
+        $confirmNewPassword = $request->input('ConfirmNewPassword');
+
+        // Retrieve the user from the database
+        $user = DB::table('users')
+        ->where('id', $userId)
+        ->first();
+
+        // Check if the current password matches the hashed password in the database
+        if ($user && Hash::check($currentPassword, $user->password)) {
+
+
+            if( $newPassword == $confirmNewPassword)
+            {
+                $hashedPassword = Hash::make($newPassword);
+
+                DB::table('users')
+                ->where('id', $userId)
+                ->update(['password' => $hashedPassword]);
+
+                return redirect('profile')->with('success', 'Password updated successfully!');
+            }
+            else{
+            return redirect()->back()->with('error', 'password not match');
+
+            }
+
+            // Update the password in the database
+
+        } else {
+            // Passwords do not match
+            return redirect()->back()->with('error', 'Incorrect current password');
+        }
+    }
 
 }
