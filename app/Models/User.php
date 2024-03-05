@@ -29,6 +29,8 @@ class User extends Authenticatable
         'about_me',
         'user_role',
         'created_at',
+        'location',
+
 
 
 

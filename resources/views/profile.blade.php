@@ -1,8 +1,8 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
         <div class="container-fluid">
@@ -100,133 +100,120 @@
                                     <strong class="text-dark">Date Created:</strong> &nbsp;{{ $user->created_at }}
                                 </li>
 
-              <li class="list-group-item border-0 px-0">
+                                <li class="list-group-item border-0 px-0">
 
-              </li>
-            </ul>
-          </div>
+                                </li>
+                            </ul>
+                        </div>
 
-        </div>
-      </div>
-      <div class="col-12 col-xl-4">
-        <div class="card h-100">
-          <div class="card-header pb-0 p-3">
-            <div class="row">
-              <div class="col-md-8 d-flex align-items-center">
-                <h6 class="mb-0">Profile Information</h6>
-              </div>
-              <div class="col-md-4 text-end">
-                <a href="#" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                  <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top"
-                    title="Edit Profile"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body p-3">
-            <p class="text-sm" style="text-align: justify">
-            </p>
-            <p>
-              {{ $user->about_me }}
-            </p>
-            <ul class="list-group">
-              <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Full
-                  Name:</strong> &nbsp; {{ $user->first_name }} {{ $user->middle_name }}
-                {{ $user->last_name }}</li>
-              <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong>
-                &nbsp; {{ $user->gender }}</li>
-              <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile
-                  Number:</strong> &nbsp;
-                {{ $user->phone }}</li>
-              <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp; {{
-                $user->location }}</li>
-              <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">About
-                  Me:</strong> &nbsp; {{ $user->about_me }}</li>
-              <li class="list-group-item border-0 ps-0 pb-0">
-                <strong class="text-dark text-sm">Social:</strong> &nbsp;
-                <a class="btn btn-facebook btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                  <i class="fab fa-facebook fa-lg"></i>
-                </a>
-                <a class="btn btn-twitter btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                  <i class="fab fa-twitter fa-lg"></i>
-                </a>
-                <a class="btn btn-instagram btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                  <i class="fab fa-instagram fa-lg"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-xl-4">
-        <div class="card h-100">
-          <div class="card-header pb-0 p-3">
-            <h6 class="mb-0">Conversations</h6>
-          </div>
-          <div class="card-body p-3">
-            <ul class="list-group">
-              @forelse ($chats as $chat)
-              <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                <div class="avatar me-3">
-                  <img src="../assets/img/profile-photo.jpg" alt="kal" class="border-radius-lg shadow">
-                </div>
-                <div class="d-flex align-items-start flex-column justify-content-center">
-                  <h6 class="mb-0 text-sm">{{ $chat->first_name }} {{ $chat->last_name }}</h6>
-                  @php
-                  try {
-                  $decryptedMessage = \Illuminate\Support\Facades\Crypt::decrypt(
-                  $chat->cht_message,
-                  );
-                  } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                  // Handle decryption failure (log the error, show a message, etc.)
-                  $decryptedMessage = 'Error decrypting message';
-                  }
-
-                  @endphp
-                  <p class="mb-0 text-xs">{{ $chat->cht_message }}</p>
-                </div>
-                <button class="btn btn-link pe-3 ps-0 mb-0 ms-auto" data-bs-toggle="offcanvas"
-                  data-bs-target="#chatModal{{ $chat->cht_to }}" data-chat-to="{{ $chat->cht_to }}">Reply</button>
-              </li>
-
-              {{-- ! OFF CANVAS LEFT--}}
-              <div class="offcanvas offcanvas-start" tabindex="-1" id="chatModal{{ $chat->cht_to }}"
-                aria-labelledby="offcanvasBothLabel" data-bs-scroll="true">
-                <div class="offcanvas-header">
-                  <h5 id="offcanvasBothLabel" class="offcanvas-title">{{ $chat->first_name }} {{ $chat->last_name }}
-                  </h5>
-                  <button type="button" class="close text-reset text-danger" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body my-auto mx-0 flex-grow-0">
-
-                </div>
-                <div class="padding-canvas-footer mx-4 my-4">
-                  <form id="chatForm" action="{{ route('send-chat') }}" method="post">
-                    @csrf
-                    <input type="hidden" name="recipient_id" value="{{ $chat->cht_from }}">
-                    <div class="d-flex mx-auto">
-                      <input class="form-control me-2 mb-2 d-grid w-100" style="flex-basis: 100%" name="message" id="message"
-                        required></input>
-                      <button type="submit" style="flex-basis: 20%" class="btn btn-primary mb-2 d-grid w-100">Send</button>
                     </div>
-                  </form>
-                  {{-- @if ($book->bookURL == '#')
-                  <a type="button" class="btn btn-primary mb-2 d-grid w-100" href="{{ $book->bookURL }}">No
-                      review</a>
-                  @else
-                  <a type="button" class="btn btn-primary mb-2 d-grid w-100" target="_blank"
-                      href="{{ $book->bookURL }}">See
-                      review</a>
-                  @endif --}}
-                  {{-- <button type="button" class="btn btn-outline-secondary d-grid w-100"
-                      data-bs-dismiss="offcanvas">Back</button> --}}
-              </div>
-              </div>
-              {{-- ! --}}
+                </div>
+                <div class="col-12 col-xl-4">
+                    <div class="card h-100">
+                        <div class="card-header pb-0 p-3">
+                            <div class="row">
+                                <div class="col-md-8 d-flex align-items-center">
+                                    <h6 class="mb-0">Profile Information</h6>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                        <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip"
+                                            data-bs-placement="top" title="Edit Profile"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-3">
+                            <p class="text-sm" style="text-align: justify">
+                            </p>
+                            <p>
+                                {{ $user->about_me }}
+                            </p>
+                            <ul class="list-group">
+                                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Full
+                                        Name:</strong> &nbsp; {{ $user->first_name }} {{ $user->middle_name }}
+                                    {{ $user->last_name }}</li>
+                                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong>
+                                    &nbsp; {{ $user->gender }}</li>
+                                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile
+                                        Number:</strong> &nbsp;
+                                    {{ $user->phone }}</li>
+                                <li class="list-group-item border-0 ps-0 text-sm"><strong
+                                        class="text-dark">Location:</strong> &nbsp; {{ $user->location }}</li>
+                                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">About
+                                        Me:</strong> &nbsp; {{ $user->about_me }}</li>
+                                <li class="list-group-item border-0 ps-0 pb-0">
+                                    <strong class="text-dark text-sm">Social:</strong> &nbsp;
+                                    <a class="btn btn-facebook btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
+                                        <i class="fab fa-facebook fa-lg"></i>
+                                    </a>
+                                    <a class="btn btn-twitter btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
+                                        <i class="fab fa-twitter fa-lg"></i>
+                                    </a>
+                                    <a class="btn btn-instagram btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
+                                        <i class="fab fa-instagram fa-lg"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-4">
+                    <div class="card h-100">
+                        <div class="card-header pb-0 p-3">
+                            <h6 class="mb-0">Conversations</h6>
+                        </div>
+                        <div class="card-body p-3">
+                            <ul class="list-group">
+                                @forelse ($chats as $chat)
+                                    <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+                                        <div class="avatar me-3">
+                                            <img src="../assets/img/profile-photo.jpg" alt="kal"
+                                                class="border-radius-lg shadow">
+                                        </div>
+                                        <div class="d-flex align-items-start flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">{{ $chat->first_name }} {{ $chat->last_name }}</h6>
+                                            @php
+                                                try {
+                                                    $decryptedMessage = \Illuminate\Support\Facades\Crypt::decrypt(
+                                                        $chat->cht_message,
+                                                    );
+                                                } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                                                    // Handle decryption failure (log the error, show a message, etc.)
+                                                    $decryptedMessage = 'Error decrypting message';
+                                                }
 
+                                            @endphp
+                                            <p class="mb-0 text-xs">{{ $decryptedMessage }}</p>
+                                        </div>
+                                        <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" data-toggle="modal"
+                                            data-target="#chatModal{{ $chat->cht_to }}"
+                                            data-chat-to="{{ $chat->cht_to }}">Reply</a>
+                                    </li>
+                                    {{-- ! --}}
+                                    {{-- <div class="modal fade" id="chatModal{{ $chat->cht_id }}" tabindex="-1"
+                aria-labelledby="viewStudentModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header  bg-gradient-warning">
+                      <h5 class="modal-title" id="viewStudentModalLabel" style="color: white;">ADD ROLE</h5>
+                      <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="modal-body-content">
+                      <form method="POST" action="/management/add_role/" class="form-container" id="updateStudentForm">
+                        @csrf
+                        <input type="hidden" name="recipient_id" value="{{ $chat->cht_to }}">
+                        <textarea class="form-control" name="message" rows="3" required></textarea>
+                        <button type="submit" class="btn btn-primary mt-2">Send</button>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+              </div> --}}
+              {{-- ! --}}
               {{-- ? Modal for conversations/chats with selected user--}}
-              {{-- <div class="modal fade" id="chatModal{{ $chat->cht_to }}" tabindex="-1" role="dialog"
+              <div class="modal fade" id="chatModal{{ $chat->cht_to }}" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -237,7 +224,6 @@
                       </button>
                     </div>
                     <div class="modal-body">
-
 
                     </div>
                     <div class="modal-footer">
@@ -253,7 +239,7 @@
                     </div>
                   </div>
                 </div>
-              </div> --}}
+              </div>
               @empty
               <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">No recent chats found.</li>
               @endforelse
@@ -269,6 +255,60 @@
   </div>
 </div>
 </div>
+
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Profile Edit Form -->
+          <form method="POST" action="{{ route('update.profile') }}">
+            {{-- @method('PUT') --}}
+            @csrf
+            <div class="mb-4">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" class="form-control" name="first_name" value="{{ $user->first_name }}">
+            </div>
+            <div class="mb-4">
+              <label for="middleName" class="form-label">Middle Name</label>
+              <input type="text" class="form-control" name="middle_name" value="{{ $user->middle_name }}">
+            </div>
+            <div class="mb-4">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" class="form-control" name="last_name" value="{{ $user->last_name }}">
+            </div>
+            <div class="mb-3">
+              <label for="gender" class="form-label">Gender</label>
+              <select class="form-select" name="gender">
+                <option value="Male" {{ $user->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                <option value="Female" {{ $user->gender == 'Female' ? 'selected' : '' }}>Female</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Mobile Number</label>
+              <input type="text" class="form-control" name="phone" value="{{ $user->phone }}">
+            </div>
+            <div class="mb-3">
+              <label for="location" class="form-label">Location</label>
+              <input type="text" class="form-control" name="location" value="{{ $user->location }}">
+            </div>
+            <div class="mb-3">
+                <label for="aboutMe" class="form-label">About Me</label>
+                <textarea class="form-control" name="about_me">{{ $user->about_me }}</textarea>
+            </div>
+
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 <div class="modal fade" id="editEmailModal" tabindex="-1" aria-labelledby="editEmailModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -333,8 +373,8 @@
 </div>
 
 
-<script>
-  $(document).ready(function() {
+    <script>
+        $(document).ready(function() {
             // Add a test click event to check if jQuery is working
             $('.btn-link').click(function() {
                 // alert('Button clicked!');
@@ -355,8 +395,9 @@
                     success: function(response) {
                         console.log(response); // Log the response to ensure it's what you expect.
 
-              var modalBody = $('#chatModal' + recipientId + ' .offcanvas-body'); // Adjust this selector based on your actual modal ID and structure.
-              modalBody.empty(); // Clear existing content.
+                        var modalBody = $('#chatModal' + recipientId +
+                        ' .modal-body'); // Adjust this selector based on your actual modal ID and structure.
+                        modalBody.empty(); // Clear existing content.
 
                         if (response.length > 0) {
                             response.forEach(function(chat) {
