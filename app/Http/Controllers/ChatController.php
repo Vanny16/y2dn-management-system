@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class ChatController extends Controller
 {
@@ -23,14 +24,15 @@ class ChatController extends Controller
             'message' => 'required|string',
         ]);
 
+        $encryptedMessage = Crypt::encrypt($request->message);
 
         DB::table('chats')
-            ->insert([
-                'cht_from' => $user->id,
-                'cht_to' => $request->recipient_id,
-                'cht_message' => $request->message,
-                'cht_date' => DB::RAW('CURRENT_TIMESTAMP')
-            ]);
+        ->insert([
+            'cht_from' => $user->id,
+            'cht_to' => $request->recipient_id,
+            'cht_message' => $encryptedMessage,
+            'cht_date' => now(),
+        ]);
 
         // // Create a new chat message
         // $chat = new Chat();
@@ -82,6 +84,15 @@ class ChatController extends Controller
             })
             ->orderBy('cht_date')
             ->get();
+            foreach ($conversation as $chat) {
+                try {
+                    $chat->cht_message = \Illuminate\Support\Facades\Crypt::decrypt($chat->cht_message);
+                } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                    // Handle decryption failure (log the error, show a message, etc.)
+                    $chat->cht_message = 'Error decrypting message';
+                }
+            }
+
         // $conversation = DB::table('chats')
         // ->where('cht_from', auth()->id())
         // ->orWhere('cht_to', auth()->id())
