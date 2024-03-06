@@ -31,7 +31,7 @@ class ChatController extends Controller
             'cht_from' => $user->id,
             'cht_to' => $request->recipient_id,
             'cht_message' => $encryptedMessage,
-            'cht_date' => now(),
+            'cht_date' => DB::RAW('CURRENT_TIMESTAMP'),
         ]);
 
         // // Create a new chat message
@@ -43,15 +43,15 @@ class ChatController extends Controller
 
         // Fetch the updated conversation data based on the recipient ID
         $recipientId = $request->recipient_id;
-        $conversation = DB::table('chats')
-            ->where(function ($query) use ($recipientId) {
-                $query->where('cht_from', auth()->id())->where('cht_to', $recipientId);
-            })
-            ->orWhere(function ($query) use ($recipientId) {
-                $query->where('cht_from', $recipientId)->where('cht_to', auth()->id());
-            })
-            ->orderBy('cht_date')
-            ->get();
+        // $conversation = DB::table('chats')
+        //     ->where(function ($query) use ($recipientId) {
+        //         $query->where('cht_from', auth()->id())->where('cht_to', $recipientId);
+        //     })
+        //     ->orWhere(function ($query) use ($recipientId) {
+        //         $query->where('cht_from', $recipientId)->where('cht_to', auth()->id());
+        //     })
+        //     ->orderBy('cht_date')
+        //     ->get();
 
         // Return the conversation data as JSON response
         // return response()->json($conversation);
@@ -62,19 +62,8 @@ class ChatController extends Controller
     {
         // $user = auth()->user();
 
-        // DB::table('chats')
-        //     ->insert([
-        //         'cht_from' => $user->id,
-        //         // 'cht_to' => $user->id,
-        //         // 'cht_message' => $message,
-        //         'cht_date' => DB::RAW('CURRENT_TIMESTAMP')
-        //     ]);
-
-        // $userId = $user->id;
-
         $recipientId = $request->input('recipient_id');
-        // dd($recipientId);
-        // // Fetch conversation data from the database based on the recipient ID
+
         $conversation = DB::table('chats')
             ->where(function ($query) use ($recipientId) {
                 $query->where('cht_from', auth()->id())->where('cht_to', $recipientId);
@@ -84,14 +73,15 @@ class ChatController extends Controller
             })
             ->orderBy('cht_date')
             ->get();
-            foreach ($conversation as $chat) {
-                try {
-                    $chat->cht_message = \Illuminate\Support\Facades\Crypt::decrypt($chat->cht_message);
-                } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                    // Handle decryption failure (log the error, show a message, etc.)
-                    $chat->cht_message = 'Error decrypting message';
-                }
+
+        foreach ($conversation as $chat) {
+            try {
+                $chat->cht_message = Crypt::decrypt($chat->cht_message);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                // Handle decryption failure (log the error, show a message, etc.)
+                $chat->cht_message = 'Error decrypting message';
             }
+        }
 
         // $conversation = DB::table('chats')
         // ->where('cht_from', auth()->id())
@@ -129,12 +119,6 @@ class ChatController extends Controller
         // ];
         return response()->json($conversation);
         // return response()->json($responseData);
-        // return response()->json(['status' => 'success', 'message' => 'Route hit successfully']);
-        // return view('profile', [
-        //     'user' => $user,
-        //     'chats' => $recentChats,
-        //     'conversation' => $conversation
-        // ])->render();
     }
 
     public function deleteMessage(Request $request)

@@ -187,17 +187,15 @@
                   <p class="mb-0 text-xs">{{ $decryptedMessage }}</p>
                 </div>
                 <button class="btn btn-link pe-3 ps-0 mb-0 ms-auto" data-bs-toggle="offcanvas"
-                  data-bs-target="#chatModal{{ $chat->cht_from }}" data-chat-to="{{ $chat->cht_from }}">Reply</button>
+                  data-bs-target="#chatModal{{ $chat->cht_from === auth()->id() ? $chat->cht_to : $chat->cht_from }}" data-chat-to="{{ $chat->cht_from === auth()->id() ? $chat->cht_to : $chat->cht_from }}">Reply</button>
               </li>
 
               {{-- ! OFF CANVAS LEFT--}}
-              <div class="offcanvas offcanvas-start" tabindex="-1" id="chatModal{{ $chat->cht_from }}"
-                aria-labelledby="offcanvasBothLabel" data-bs-scroll="true">
+              <div class="offcanvas offcanvas-start" tabindex="-1" id="chatModal{{ $chat->cht_from === auth()->id() ? $chat->cht_to : $chat->cht_from }}" aria-labelledby="offcanvasBothLabel" data-bs-scroll="true">
                 <div class="offcanvas-header">
                   <h5 id="offcanvasBothLabel" class="offcanvas-title">{{ $chat->first_name }} {{ $chat->last_name }}
                   </h5>
-                  <button type="button" class="close text-reset text-danger" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
+                  <button type="button" class="close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body my-auto mx-0 flex-grow-0">
 
@@ -205,7 +203,7 @@
                 <div class="padding-canvas-footer mx-4 my-4">
                   <form id="chatForm" action="{{ route('send-chat') }}" method="post">
                     @csrf
-                    <input type="hidden" name="recipient_id" value="{{ $chat->cht_from }}">
+                    <input type="hidden" name="recipient_id" value="{{ $chat->cht_from === auth()->id() ? $chat->cht_to : $chat->cht_from }}">
                     <div class="d-flex mx-auto">
                       <input class="form-control me-2 mb-2 d-grid w-100" style="flex-basis: 100%" name="message"
                         id="message" required></input>
@@ -216,36 +214,6 @@
                 </div>
               </div>
               {{-- ! --}}
-
-              {{-- ? Modal for conversations/chats with selected user--}}
-              {{-- <div class="modal fade" id="chatModal{{ $chat->cht_to }}" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">{{ $chat->first_name }} {{ $chat->last_name }}</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-
-
-                    </div>
-                    <div class="modal-footer">
-                      <form id="chatForm" action="{{ route('send-chat') }}" method="post">
-                        @csrf
-                        <input type="hidden" name="recipient_id" value="{{ $chat->cht_from }}">
-                        <div class="d-flex mx-auto">
-                          <input class="form-control me-2" style="flex-basis: 100%" name="message" id="message"
-                            required></input>
-                          <button type="submit" style="flex-basis: 20%" class="btn btn-primary mt-2">Send</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div> --}}
               @empty
               <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">No recent chats found.</li>
               @endforelse
@@ -332,60 +300,54 @@
 
 
 <script>
-  $(document).ready(function() {
-            // Add a test click event to check if jQuery is working
-            $('.btn-link').click(function() {
-                // alert('Button clicked!');
-                console.log("Button clicked"); // Check if this message appears in the console
-                var recipientId = $(this).data('chat-to');
-                $('#chatForm input[name="recipient_id"]').val(recipientId);
-                loadConversationContent(recipientId); // Call the function to load conversation content
-            });
-
-            // Function to load conversation content via AJAX
-            function loadConversationContent(recipientId) {
-                $.ajax({
-                    url: "{{ route('load-conversation') }}",
-                    type: "GET",
-                    data: {
-                        recipient_id: recipientId
-                    },
-                    success: function(response) {
-                        console.log(response); // Log the response to ensure it's what you expect.
-
-              var modalBody = $('#chatModal' + recipientId + ' .offcanvas-body'); // Adjust this selector based on your actual modal ID and structure.
-              modalBody.empty(); // Clear existing content.
-
-                        if (response.length > 0) {
-                            response.forEach(function(chat) {
-                                var messageElement = $('<p></p>').text(chat.cht_message);
-
-                                // Add a CSS class based on the value of cht_from
-                                if (chat.cht_from == {{ auth()->id() }}) {
-                                    messageElement.addClass('text-end');
-                                } else {
-                                    messageElement.addClass('text-start');
-                                }
-
-                                modalBody.append(
-                                messageElement); // Append the message to the modal body.
-                            });
-                        } else {
-                            modalBody.text(
-                            'No conversation found.'); // Display a message if no conversation exists.
-                        }
-
-                        // Assuming you've correctly initialized Bootstrap's modal via JavaScript or data attributes.
-                        var myModal = new bootstrap.Modal(document.getElementById('chatModal' +
-                            recipientId)); // Adjust this ID based on your modal's ID.
-                        myModal.hide(); // Show the modal with the updated content.
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            }
+    $(document).ready(function() {
+        // Add a test click event to check if jQuery is working
+        $('.btn-link').click(function() {
+            // alert('Button clicked!');
+            console.log("Button clicked"); // Check if this message appears in the console
+            var recipientId = $(this).data('chat-to');
+            $('#chatForm input[name="recipient_id"]').val(recipientId);
+            loadConversationContent(recipientId); // Call the function to load conversation content
         });
+
+        // Function to load conversation content via AJAX
+        function loadConversationContent(recipientId) {
+            $.ajax({
+                url: "{{ route('load-conversation') }}",
+                type: "GET",
+                data: {
+                    recipient_id: recipientId
+                },
+                success: function(response) {
+                    console.log(response); // Log the response to ensure it's what you expect.
+
+                    var modalBody = $('#chatModal' + recipientId + ' .offcanvas-body'); // Adjust this selector based on your actual modal ID and structure.
+                    modalBody.empty(); // Clear existing content.
+
+                    if (response.length > 0) {
+                        response.forEach(function(chat) {
+                            var messageElement = $('<p></p>').text(chat.cht_message);
+                            // Add a CSS class based on the value of cht_from
+                            if (chat.cht_from == {{ auth()->id() }}) {
+                                messageElement.addClass('text-end');
+                            } else {
+                                messageElement.addClass('text-start');
+                            }
+                            modalBody.append(messageElement); // Append the message to the modal body.
+                        });
+                    } else {
+                        modalBody.text('No conversation found.'); // Display a message if no conversation exists.
+                    }
+                    // Assuming you've correctly initialized Bootstrap's modal via JavaScript or data attributes.
+                    var myModal = new bootstrap.Offcanvas(document.getElementById('chatModal' + recipientId)); // Adjust this ID based on your modal's ID.
+                    myModal.show(); // Show the modal with the updated content.
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+    });
 
     // Automatically close alerts after 5 seconds with a fading effect
     window.setTimeout(function() {
@@ -408,8 +370,5 @@
             }, 3000); // Adjust the duration to match the transition duration
         }
     }, 3000); // Adjust the total duration as needed
-
-
-
 </script>
 @endsection
