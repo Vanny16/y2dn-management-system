@@ -32,9 +32,9 @@ class ChatController extends Controller
             'cht_to' => $request->recipient_id,
             'cht_message' => $encryptedMessage,
             'cht_date' => DB::RAW('CURRENT_TIMESTAMP'),
-        ]);
+        ]); 
 
-        // // Create a new chat message
+        // // Create a new chat messageukgv
         // $chat = new Chat();
         // $chat->cht_from = auth()->id();
         // $chat->cht_to = $request->input('recipient_id');
