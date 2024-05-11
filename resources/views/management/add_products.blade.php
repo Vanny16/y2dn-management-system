@@ -8,10 +8,10 @@
         <div class="container-fluid py-4">
             <div class="card">
                 <div class="card-header pb-0 px-3">
-                    <h6 class="mb-0">{{ __('Student Information') }}</h6>
+                    <h6 class="mb-0">{{ __('Product Information') }}</h6>
                 </div>
                 <div class="card-body pt-4 p-3">
-                    <form id="enrollForm" action="/save_enrollee" method="POST" role="form text-left">
+                    <form id="enrollForm" action="/save_product" enctype="multipart/form-data" method="POST" role="form text-left">
                         @csrf
                         @if ($errors->any())
                             <!-- Error message display -->
@@ -36,31 +36,16 @@
                                 </button>
                             </div>
                         @endif
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!-- Student ID field -->
-                                <div class="form-group">
-                                    <label for="student-id" class="form-control-label">{{ __('Student ID') }}</label>
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-secondary btn-sm"
-                                            onclick="generateStudentID()">Generate</button>
-                                    </div>
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" id="student-id" name="student_id"
-                                            required>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="row">
                             <!-- First Column - Last Name -->
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="last-name" class="form-control-label">{{ __('Last Name') }}</label>
-                                    <div class="@error('last_name') border border-danger rounded-3 @enderror">
-                                        <input class="form-control" type="text" placeholder="Last Name" id="last-name"
-                                            name="last_name" required>
-                                        @error('last_name')
+                                    <label for="last-name" class="form-control-label">{{ __('Product Name') }}</label>
+                                    <div class="@error('product_name') border border-danger rounded-3 @enderror">
+                                        <input class="form-control" type="text" placeholder="Product Name" id="last-name"
+                                            name="product_name" required>
+                                        @error('product_name')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -69,11 +54,11 @@
                             <!-- Second Column - First Name -->
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="first-name" class="form-control-label">{{ __('First Name') }}</label>
-                                    <div class="@error('first_name') border border-danger rounded-3 @enderror">
-                                        <input class="form-control" type="text" placeholder="First Name" id="first-name"
-                                            name="first_name" required>
-                                        @error('first_name')
+                                    <label for="first-name" class="form-control-label">{{ __('Price') }}</label>
+                                    <div class="@error('price') border border-danger rounded-3 @enderror">
+                                        <input class="form-control" type="text" placeholder="Price" id="first-name"
+                                            name="price" required>
+                                        @error('price')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -82,11 +67,11 @@
                             <!-- Third Column - Middle Name -->
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="middle-name" class="form-control-label">{{ __('Middle Name') }}</label>
-                                    <div class="@error('middle_name') border border-danger rounded-3 @enderror">
-                                        <input class="form-control" type="text" placeholder="Middle Name"
-                                            id="middle-name" name="middle_name" required>
-                                        @error('middle_name')
+                                    <label for="middle-name" class="form-control-label">{{ __('QuantityOnHand') }}</label>
+                                    <div class="@error('quantitystock') border border-danger rounded-3 @enderror">
+                                        <input class="form-control" type="text" placeholder="Stock Quantity"
+                                            id="quantitystock" name="quantitystock" required>
+                                        @error('quantitystock')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -95,100 +80,81 @@
                         </div>
                         <div class="row">
                             <!-- First Column - Gender -->
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="gender" class="form-control-label">{{ __('Gender') }}</label>
-                                    <div class="@error('gender') border border-danger rounded-3 @enderror">
-                                        <select class="form-control" id="gender" name="gender" required>
-                                            <option value="" disabled selected>Select Gender</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                        </select>
-                                        @error('gender')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Second Column - Mobile Number -->
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="mobile-number" class="form-control-label">{{ __('Mobile Number') }}</label>
-                                    <div class="@error('mobile_number') border border-danger rounded-3 @enderror">
-                                        <input class="form-control" type="text" placeholder="9123456789" maxlength="10"
-                                            id="mobile-number" name="mobile_number" required>
-                                        @error('mobile_number')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Third Column - Email -->
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="email" class="form-control-label">{{ __('Email') }}</label>
-                                    <div class="@error('email') border border-danger rounded-3 @enderror">
-                                        <input class="form-control" type="email" placeholder="user@example.com"
-                                            id="email" name="email" required>
-                                        @error('email')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Address and Date of Birth row -->
-                        <div class="row">
-                            <!-- Address column -->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="address" class="form-control-label">{{ __('Address') }}</label>
-                                    <div class="@error('address') border border-danger rounded-3 @enderror">
-                                        <input class="form-control" type="text" placeholder="Please enter the address"
-                                            id="address" name="address" required>
-                                        @error('address')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Date of Birth column with date picker -->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="dob" class="form-control-label">{{ __('Date of Birth') }}</label>
-                                    <div class="@error('dob') border border-danger rounded-3 @enderror">
-                                        <input class="form-control datepicker" type="date"
-                                            placeholder="Please select date of birth" id="dob" name="dob"
-                                            required data-date-format="m-d-y">
-                                        @error('dob')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
 
+                            <!-- Second Column - Mobile Number -->
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="department" class="form-control-label">{{ __('Category') }}</label>
+                                    <div class="@error('category') border border-danger rounded-3 @enderror">
+                                        <select class="form-control w-65" id="department" name="category"
+                                            onchange="updateProgramOptions()" required>
+                                            <option value="" disabled selected>Select Category</option>
+                                            <option value="Fruits">Fruits
+                                            </option>
+                                            <option value="Vegetables">Vegetables</option>
+                                            <option value="Meat">Meat
+                                            </option>
+                                            <option value="Seafood">Seafood
+                                            </option>
+                                        </select>
+                                        @error('category')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="first-name" class="form-control-label">{{ __('Discount') }}</label>
+                                    <div class="@error('discount') border border-danger rounded-3 @enderror">
+                                        <input class="form-control" type="text" placeholder="First Name" id="first-name"
+                                            name="discount" required>
+                                        @error('discount')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="product-image" class="form-control-label">{{ __('Product Image') }}</label>
+                                    <div class="@error('product_image') border border-danger rounded-3 @enderror">
+                                        <input class="form-control" type="file" id="product-image" name="product_image" required>
+                                        @error('product_image')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- Third Column - Email -->
+
+                        <!-- Address and Date of Birth row -->
+
+                            <!-- Date of Birth column with date picker -->
+
                         </div>
                         <!-- Department and Program row -->
                         <div class="row">
                             <!-- First Column - Department -->
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="department" class="form-control-label">{{ __('Department') }}</label>
+                                    <label for="department" class="form-control-label">{{ __('Category') }}</label>
                                     <div class="@error('department') border border-danger rounded-3 @enderror">
-                                        <select class="form-control w-100" id="department" name="department"
+                                        <select class="form-control w-90" id="department" name="department"
                                             onchange="updateProgramOptions()" required>
-                                            <option value="" disabled selected>Select Department</option>
-                                            <option value="College of Accounting Education">College of Accounting Education
+                                            <option value="" disabled selected>Select Category</option>
+                                            <option value="Fruits">Fruits
                                             </option>
-                                            <option value="College of Architecture and Fine Arts Education">College of
-                                                Architecture and Fine Arts Education</option>
-                                            <option value="College of Arts and Sciences">College of Arts and Sciences
+                                            <option value="Vegetables">Vegetables</option>
+                                            <option value="Meat">Meat
                                             </option>
-                                            <option value="College of Business Administration">College of Business
-                                                Administration</option>
-                                            <option value="College of Computing Education">College of Computing Education
-                                            </option>
-                                            <option value="College of Criminal Justice">College of Criminal Justice
+                                            <option value="Seafood">Seafood
                                             </option>
                                         </select>
                                         @error('department')
@@ -196,22 +162,9 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- Second Column - Program -->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="program" class="form-control-label">{{ __('Program') }}</label>
-                                    <div class="@error('program') border border-danger rounded-3 @enderror">
-                                        <select class="form-control w-100" id="program" name="program" required>
-                                            <option value="" disabled selected>Select Program</option>
-                                            <!-- Program options will be dynamically updated using JavaScript -->
-                                        </select>
-                                        @error('program')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -225,7 +178,7 @@
                         <!-- Your other form fields... -->
                         <div class="d-flex justify-content-end">
                             <button type="submit"
-                                class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Enroll Student' }}</button>
+                                class="btn bg-gradient-success btn-md mt-4 mb-4">{{ 'Add Product' }}</button>
                         </div>
                     </form>
                 </div>

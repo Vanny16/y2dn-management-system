@@ -11,10 +11,10 @@
                 <div class="card-header pb-0">
                     <div class="d-flex flex-row justify-content-between">
                         <div>
-                            <h5 class="mb-0">Enrolled Students</h5>
+                            <h5 class="mb-0">Products</h5>
                         </div>
-                        <a href="/enroll_student" class="btn bg-gradient-primary btn-sm mb-0" type="button">+&nbsp;
-                            Enroll Student</a>
+                        <a href="/add_products" class="btn bg-gradient-primary btn-sm mb-0" type="button">+&nbsp;
+                            Add Products</a>
                     </div>
                     @if(session('success'))
                     <!-- Success message display -->
@@ -39,19 +39,19 @@
                                     </th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Student ID
+                                        Product Image
                                     </th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Name
+                                        Product Name
                                     </th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Date Enrolled
+                                        Category
                                     </th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Email
+                                        Price
                                     </th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -60,51 +60,54 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($enrolledStudents as $enrolledStudent)
+                                @foreach ($viewProducts as $prod_details)
                                 <tr>
                                     <td class="ps-4">
-                                        <p class="text-xs font-weight-bold mb-0">{{ $enrolledStudent->id }}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $prod_details->product_id }}</p>
                                     </td>
                                     <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{ $enrolledStudent->student_id }}</p>
+                                        <img src="{{ asset('storage/products_image/' . $prod_details->product_image) }}" alt="Product Image" class="img-fluid" style="max-width: 100px;">
                                     </td>
+
+
+
                                     <td class="text-center">
                                         <p class="text-xs font-weight-bold mb-0">
-                                            {{ $enrolledStudent->last_name }}, {{ $enrolledStudent->first_name }} {{
-                                            substr($enrolledStudent->middle_name, 0, 1) }}.
+                                           {{ $prod_details->product_name }}
                                         </p>
                                     </td>
                                     <td class="text-center">
                                         <span class="text-secondary text-xs font-weight-bold">{{
-                                            $enrolledStudent->created_at->format('d/m/y') }}</span>
+                                            $prod_details->category }}</span>
                                     </td>
                                     <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{ $enrolledStudent->email }}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $prod_details->product_price }}</p>
                                     </td>
+
                                     <td style="text-align:center">
                                         <a class="btn btn-primary btn-sm view-btn text-white" data-toggle="modal"
-                                            data-target="#viewStudentModal{{ $enrolledStudent->id }}">
+                                            data-target="#viewStudentModal{{ $prod_details->product_id }}">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <a class="btn btn-secondary btn-sm view-btn text-white"
-                                            href="{{ route('management.enrolled_student_update', $enrolledStudent->id) }}">
+                                            href="{{ route('management.enrolled_student_update', $prod_details->product_id) }}">
                                             <i class="fas fa-user-edit"></i>
                                         </a>
                                         <a class="btn btn-danger btn-sm text-white" href="#"
                                             onclick="event.preventDefault();
                                                 if (confirm('Are you sure you want to delete this student record?'))
-                                                    document.getElementById('delete-form-{{ $enrolledStudent->id }}').submit();">
+                                                    document.getElementById('delete-form-{{ $prod_details->product_id }}').submit();">
                                             <i class="fas fa-trash"></i>
                                         </a>
-                                        <form id="delete-form-{{ $enrolledStudent->id }}"
-                                            action="{{ route('delete_enrollee', $enrolledStudent->id) }}" method="POST"
+                                        <form id="delete-form-{{ $prod_details->product_id }}"
+                                            action="{{ route('delete_enrollee', $prod_details->product_id) }}" method="POST"
                                             style="display: none;">
                                             @csrf
                                             @method('DELETE')
                                         </form>
                                     </td>
                                 </tr>
-                                <div class="modal fade" id="viewStudentModal{{ $enrolledStudent->id }}" tabindex="-1"
+                                {{-- <div class="modal fade" id="viewStudentModal{{ $prod_details->product_id }}" tabindex="-1"
                                     aria-labelledby="viewStudentModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-lg">
                                         <div class="modal-content">
@@ -174,7 +177,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                     </div>
                     @endforeach
                     </tbody>

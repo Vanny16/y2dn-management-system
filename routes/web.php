@@ -52,22 +52,25 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('tables');
 	})->name('tables');
 
-	Route::get('virtual-reality', function () {
-		return view('virtual-reality');
-	})->name('virtual-reality');
+	//Route::get('virtual-reality', function () {
+	//	return view('virtual-reality');
+	//})->name('virtual-reality');
 
-	Route::get('static-sign-in', function () {
-		return view('static-sign-in');
-	})->name('sign-in');
+	//Route::get('static-sign-in', function () {
+	//	return view('static-sign-in');
+	//})->name('sign-in');
 
-	Route::get('static-sign-up', function () {
-		return view('static-sign-up');
-	})->name('sign-up');
+	//Route::get('static-sign-up', function () {
+	//	return view('static-sign-up');
+	//})->name('sign-up');
 
 	Route::get('/logout', [SessionsController::class, 'destroy']);
-	Route::get('/enroll_student', [InfoUserController::class, 'enroll_student']);
+	Route::get('/add_products', [InfoUserController::class, 'add_products']);
 	Route::post('/save_enrollee', [InfoUserController::class, 'save_enrollee']);
+	Route::post('/save_product', [InfoUserController::class, 'save_product']);
 	Route::get('/enrolled_students', [InfoUserController::class, 'enrolled_students'])->name('enrolled_students');
+	Route::get('/view_products', [InfoUserController::class, 'view_products'])->name('view_products');
+
 	Route::delete('/delete_enrollee/{id}', [InfoUserController::class, 'delete_enrollee'])->name('delete_enrollee');
 	Route::get('/update_enrollee/{id}', [InfoUserController::class, 'edit'])->name('management.enrolled_student_update');
 	Route::put('/management/enrolled_student_update/{id}', [InfoUserController::class, 'update_enrollee']);
@@ -95,7 +98,7 @@ Route::group(['middleware' => 'auth'], function () {
 	})->name('sign-up');
 });
 
-Route::group(['middleware' => 'guest'], function () {
+// Route::group(['middleware' => 'guest'], function () {
 	Route::get('/register', [RegisterController::class, 'create']);
 	Route::post('/register', [RegisterController::class, 'store'])->name('register');
 	Route::get('/login', [SessionsController::class, 'create']);
@@ -105,7 +108,7 @@ Route::group(['middleware' => 'guest'], function () {
 	Route::get('/reset-password', [ResetController::class, 'resetPass'])->name('password.reset');
 
 
-});
+// });
 
 Route::get('/login', function () {
 	return view('session/login-session');
@@ -113,6 +116,8 @@ Route::get('/login', function () {
 
 
 Route::post('/backup-database', [DatabaseController::class, 'backupDatabase']);
+
+
 
 
 

@@ -38,7 +38,7 @@
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manage Students</h6>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ (Request::is('enrolled_students') ? 'active' : '') }} " href="{{ url('enrolled_students') }}">
+        <a class="nav-link {{ (Request::is('view_products') ? 'active' : '') }} " href="{{ url('view_products') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <title>customer-support</title>
@@ -55,7 +55,7 @@
                     </g>
                 </svg>
             </div>
-            <span class="nav-link-text ms-1">Enrolled Students</span>
+            <span class="nav-link-text ms-1">Products</span>
         </a>
       </li>
 

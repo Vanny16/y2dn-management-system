@@ -3,7 +3,7 @@
 @section('content')
 
 <section class="min-vh-100 mb-8">
-    <div class="page-header align-items-start min-vh-75 pt-5 pb-11 mx-3 border-radius-lg" style="background-image: url('../assets/img/iscp_enroll.jpg'); background-size: cover;">
+    <div class="page-header align-items-start min-vh-75 pt-5 pb-11 mx-3 border-radius-lg" style="background-image: url('../assets/img/homebg1.jpg'); background-size: cover;">
         <span class="mask bg-gradient-dark opacity-3"></span>
     </div>
 
@@ -121,13 +121,13 @@
                                 I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
                               </label>
                               @error('agreement')
-                                <p class="text-danger text-xs mt-2">First, agree to the Terms and Conditions, then try register again.</p>
+                                <p class="text-success text-xs mt-2">First, agree to the Terms and Conditions, then try register again.</p>
                               @enderror
                             </div>
                             <div class="text-center">
-                              <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>
+                              <button type="submit" class="btn bg-gradient-success w-100 my-4 mb-2">Sign up</button>
                             </div>
-                            <p class="text-sm mt-3 mb-0">Already have an account? <a href="login" class="text-dark font-weight-bolder">Sign in</a></p>
+                            <p class="text-sm mt-3 mb-0">Already have an account? <a href="login" class="text-success font-weight-bolder">Sign in</a></p>
                         </form>
                     </div>
                 </div>
