@@ -90,7 +90,7 @@
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <a class="btn btn-secondary btn-sm view-btn text-white"
-                                            href="{{ route('management.enrolled_student_update', $prod_details->product_id) }}">
+                                            href="{{ route('management.product_details', $prod_details->product_id) }}">
                                             <i class="fas fa-user-edit"></i>
                                         </a>
                                         <a class="btn btn-danger btn-sm text-white" href="#"

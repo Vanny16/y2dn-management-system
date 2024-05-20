@@ -52,6 +52,20 @@ class InfoUserController extends Controller
         return view('management.add_products');
     }
 
+    public function product_details($id)
+    {
+        $product = Products::find($id);
+
+        if (!$product) {
+        // Handle the case where the product is not found
+        // You might want to redirect back with an error message
+        return redirect()->back()->with('error', 'Product not found');
+    }
+
+    // Pass the product data to the view
+    return view('management.update_product', ['product' => $product]);
+    }
+
     public function backup()
     {
         $backup_history = DB::table('backup_logs')
@@ -128,6 +142,60 @@ class InfoUserController extends Controller
             return view('management.enrolled_student_update', ['enrolledStudent' => $enrolledStudent]);
         }
     }
+
+    public function update_product(Request $request, $id)
+{
+    // Validate the incoming request data
+    $request->validate([
+        'product_name' => 'required',
+        'price' => 'required',
+        'quantitystock' => 'required',
+        'category' => 'required',
+        'discount' => 'required',
+        'product_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        // Add other validation rules as needed
+    ]);
+
+    // Find the product by ID
+    $product = Products::find($id);
+
+    // Check if the product exists
+    if (!$product) {
+        // Handle the case where the product is not found
+        return redirect()->back()->with('error', 'Product not found.');
+    }
+
+    // If a new image is uploaded, process it
+    if ($request->hasFile('product_image')) {
+        // Get the file from the request
+        $image = $request->file('product_image');
+        // Generate a unique name for the file
+        $imageName = time() . '_' . $image->getClientOriginalName();
+        // Store the file in the storage/app/public directory
+        $image->storeAs('public/products_image', $imageName);
+        // Delete the old image file if it exists
+        if ($product->product_image) {
+            Storage::delete('public/products_image/' . $product->product_image);
+        }
+        // Update the product image attribute with the new image name
+        $product->product_image = $imageName;
+    }
+
+    // Update the product attributes with the validated data
+    $product->product_name = $request->input('product_name');
+    $product->price = $request->input('price');
+    $product->quantitystock = $request->input('quantitystock');
+    $product->category = $request->input('category');
+    $product->discount = $request->input('discount');
+
+    // Save the updated product to the database
+    $product->save();
+
+    // Redirect to the product details page with a success message
+    return redirect('/view_products')->with('success', 'Product updated successfully.');
+}
+
+
     public function update_enrollee(Request $request, $id)
     {
         // Find the enrolled student by ID

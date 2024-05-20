@@ -11,10 +11,8 @@
                 <h6 class="mb-0">{{ __('Product Information') }}</h6>
             </div>
             <div class="card-body pt-4 p-3">
-                <form method="POST" action="{{ url('/management/enrolled_student_update/' . $enrolledStudent->id) }}"
-                    class="form-container" id="updateStudentForm">
+                <form method="POST" action="{{ route('management.update_product', ['id' => $product->product_id]) }}" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
                     @if($errors->any())
                     <!-- Error message display -->
                     <div class="mt-3 alert alert-primary alert-dismissible fade show" role="alert">
@@ -37,7 +35,7 @@
                         </button>
                     </div>
                     @endif
-                    
+
                     <div class="row">
                         <!-- First Column - Last Name -->
                         <div class="col-md-4">
@@ -45,7 +43,7 @@
                                 <label for="product-name" class="form-control-label">{{ __('Product Name') }}</label>
                                 <div class="@error('product_namel') border border-danger rounded-3 @enderror">
                                     <input class="form-control" type="text" placeholder="Product Name" id="product-name"
-                                        name="product_name" value="{{ $enrolledStudent->product_name }}" required>
+                                        name="product_name" value="{{ $product->product_name }}" required>
                                     @error('product_name')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -58,7 +56,7 @@
                                 <label for="first-name" class="form-control-label">{{ __('Price') }}</label>
                                 <div class="@error('price') border border-danger rounded-3 @enderror">
                                     <input class="form-control" type="text" placeholder="Price" id="first-name"
-                                        name="price" value="{{ $enrolledStudent->price }}" required>
+                                        name="price" value="{{ $product->price }}" required>
                                     @error('price')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -71,7 +69,7 @@
                                 <label for="quantitystock" class="form-control-label">{{ __('Stock Quantity') }}</label>
                                 <div class="@error('quantitystock') border border-danger rounded-3 @enderror">
                                     <input class="form-control" type="text" placeholder="Quantity" id="quantitystock"
-                                        name="quantitystock" value="{{ $enrolledStudent->quantitystock }}" required>
+                                        name="quantitystock" value="{{ $product->quantitystock }}" required>
                                     @error('quantitystock')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -86,8 +84,8 @@
                                 <label for="category" class="form-control-label">{{ __('Category') }}</label>
                                 <div class="@error('category') border border-danger rounded-3 @enderror">
                                     <select class="form-control" id="category" name="category" required>
-                                        <option value="{{ $enrolledStudent->category }}" selected>{{
-                                            $enrolledStudent->category
+                                        <option value="{{ $product->category }}" selected>{{
+                                            $product->category
                                             }}
                                         </option>
                                         <option value="" disabled selected>Select Category</option>
@@ -103,14 +101,14 @@
                             </div>
                         </div>
                         <!-- Second Column - Mobile Number -->
-                        
+
                         <!-- Third Column - Email -->
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="email" class="form-control-label">{{ __('Discount') }}</label>
                                 <div class="@error('discount') border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="email" placeholder="Enter Discount" id="discount"
-                                        name="discount" value="{{ $enrolledStudent->discount }}" required>
+                                    <input class="form-control" type="number" placeholder="Enter Discount" id="discount"
+                                        name="discount" value="{{ $product->discount }}" required>
                                     @error('discount')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -125,7 +123,7 @@
                             <div class="form-group">
                                 <label for="product-image" class="form-control-label">{{ __('Product Image') }}</label>
                                 <div class="@error('product_image') border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="file" id="product-image" name="product_image" value="{{ $enrolledStudent->product_image }}" required>
+                                    <input class="form-control" type="file" id="product-image" name="product_image" value="{{ $product->product_image }}" required>
                                     @error('product_image')
                                     <p class=" text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -133,14 +131,14 @@
                             </div>
                         </div>
                         <!-- Date of Birth column with date picker -->
-                        
+
                     </div>
                     <!-- Department and Program row -->
                     <div class="row">
                         <!-- First Column - Department -->
-                        
+
                         <!-- Second Column - Program -->
-                        
+
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Update Product'

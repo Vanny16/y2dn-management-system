@@ -73,7 +73,12 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::delete('/delete_enrollee/{id}', [InfoUserController::class, 'delete_enrollee'])->name('delete_enrollee');
 	Route::get('/update_enrollee/{id}', [InfoUserController::class, 'edit'])->name('management.enrolled_student_update');
-	Route::put('/management/enrolled_student_update/{id}', [InfoUserController::class, 'update_enrollee']);
+	Route::get('/product_details/{id}', [InfoUserController::class, 'product_details'])->name('management.product_details');
+	Route::post('/update_product/{id}', [InfoUserController::class, 'update_product'])->name('management.update_product');
+
+
+    Route::put('/management/enrolled_student_update/{id}', [InfoUserController::class, 'update_enrollee']);
+
 	Route::put('/management/add_staff/', [InfoUserController::class, 'add_staff']);
 	Route::put('/management/add_role/', [InfoUserController::class, 'add_role']);
 	Route::get('/backup', [InfoUserController::class, 'backup'])->name('backup');
