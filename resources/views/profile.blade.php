@@ -65,14 +65,7 @@
     <div class="row">
       <div class="col-12 col-xl-4">
         <div class="card h-100">
-          <div class="card-header pb-0 p-3">
-            <h6 class="mb-0">Account Settings</h6>
-            <div class="form-check form-switch mt-3 ps-0">
-              <input class="form-check-input ms-auto" type="checkbox" id="flexSwitchCheckDefault2" checked>
-              <label class="form-check-label text-body ms-3 text-truncate w-80 mb-0" for="flexSwitchCheckDefault2">Email
-                me when someone mentions me</label>
-            </div>
-          </div>
+          
           <div class="card-body">
             <h6 class="text-uppercase text-body text-xs font-weight-bolder">Account</h6>
             <ul class="list-group">
@@ -140,96 +133,15 @@
               <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile
                   Number:</strong> &nbsp;
                 {{ $user->phone }}</li>
-              <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp; {{
+              <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Address:</strong> &nbsp; {{
                 $user->location }}</li>
-              <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">About
-                  Me:</strong> &nbsp; {{ $user->about_me }}</li>
-              <li class="list-group-item border-0 ps-0 pb-0">
-                <strong class="text-dark text-sm">Social:</strong> &nbsp;
-                <a class="btn btn-facebook btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                  <i class="fab fa-facebook fa-lg"></i>
-                </a>
-                <a class="btn btn-twitter btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                  <i class="fab fa-twitter fa-lg"></i>
-                </a>
-                <a class="btn btn-instagram btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                  <i class="fab fa-instagram fa-lg"></i>
-                </a>
-              </li>
+            
+              
             </ul>
           </div>
         </div>
       </div>
-      <div class="col-12 col-xl-4">
-        <div class="card h-100">
-          <div class="card-header pb-0 p-3">
-            <h6 class="mb-0">Conversations</h6>
-          </div>
-          <div class="card-body p-3">
-            <ul class="list-group">
-              @forelse ($chats as $chat)
-              <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                <div class="avatar me-3">
-                  <img src="../assets/img/profile-photo.jpg" alt="kal" class="border-radius-lg shadow">
-                </div>
-                <div class="d-flex align-items-start flex-column justify-content-center">
-                  <h6 class="mb-0 text-sm">{{ $chat->first_name }} {{ $chat->last_name }}</h6>
-                  @php
-                  try {
-                  $decryptedMessage = \Illuminate\Support\Facades\Crypt::decrypt(
-                  $chat->cht_message,
-                  );
-                  } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                  // Handle decryption failure (log the error, show a message, etc.)
-                  $decryptedMessage = 'Error decrypting message';
-                  }
-
-                  @endphp
-                  <p class="mb-0 text-xs">{{ $decryptedMessage }}</p>
-                </div>
-                <button class="btn btn-link pe-3 ps-0 mb-0 ms-auto" data-bs-toggle="offcanvas"
-                  data-bs-target="#chatModal{{ $chat->cht_from === auth()->id() ? $chat->cht_to : $chat->cht_from }}" data-chat-to="{{ $chat->cht_from === auth()->id() ? $chat->cht_to : $chat->cht_from }}">Reply</button>
-              </li>
-
-              {{-- ! OFF CANVAS LEFT--}}
-              <div class="offcanvas offcanvas-start" tabindex="-1" id="chatModal{{ $chat->cht_from === auth()->id() ? $chat->cht_to : $chat->cht_from }}" aria-labelledby="offcanvasBothLabel" data-bs-scroll="true">
-                <div class="offcanvas-header">
-                  <h5 id="offcanvasBothLabel" class="offcanvas-title">{{ $chat->first_name }} {{ $chat->last_name }}
-                  </h5>
-                  <button type="button" class="close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body my-auto mx-0 flex-grow-0">
-
-                </div>
-                <div class="padding-canvas-footer mx-4 my-4">
-                  <form id="chatForm" action="{{ route('send-chat') }}" method="post">
-                    @csrf
-                    <input type="hidden" name="recipient_id" value="{{ $chat->cht_from === auth()->id() ? $chat->cht_to : $chat->cht_from }}">
-                    <div class="d-flex mx-auto">
-                      <input class="form-control me-2 mb-2 d-grid w-100" style="flex-basis: 100%" name="message"
-                        id="message" required></input>
-                      <button type="submit" style="flex-basis: 20%"
-                        class="btn btn-primary mb-2 d-grid w-100">Send</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              {{-- ! --}}
-              @empty
-              <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">No recent chats found.</li>
-              @endforelse
-              <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                <a class="btn btn-link mx-auto" href="javascript:;">View all chats</a>
-              </li>
-              {{-- ? --}}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
+ 
 
 <div class="modal fade" id="editEmailModal" tabindex="-1" aria-labelledby="editEmailModalLabel" aria-hidden="true">
   <div class="modal-dialog">

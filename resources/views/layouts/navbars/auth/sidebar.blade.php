@@ -3,7 +3,7 @@
   <div class="sidenav-header">
     <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
     <a class="align-items-center d-flex m-0 navbar-brand text-wrap" href="{{ route('dashboard') }}">
-        <img src="../assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="...">
+        <img src="../assets/img/CNS.png" class="navbar-brand-img h-100" alt="...">
         <span class="ms-3 font-weight-bold">{{ auth()->user()->name }}</span>
     </a>
   </div>
@@ -28,14 +28,14 @@
               </g>
             </svg>
           </div>
-          <span class="nav-link-text ms-1">Dashboard</span>
+          <span class="nav-link-text ms-1">Admin Dashboard</span>
         </a>
       </li>
       @endif
 
       @if(auth()->user()->user_role == 1 || auth()->user()->user_role == 2)
       <li class="nav-item mt-2">
-        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manage Students</h6>
+        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Products</h6>
       </li>
       <li class="nav-item">
         <a class="nav-link {{ (Request::is('view_products') ? 'active' : '') }} " href="{{ url('view_products') }}">
@@ -55,7 +55,7 @@
                     </g>
                 </svg>
             </div>
-            <span class="nav-link-text ms-1">Products</span>
+            <span class="nav-link-text ms-1">Manage Products</span>
         </a>
       </li>
 
@@ -64,7 +64,7 @@
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('student_documents') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
             </div>
-            <span class="nav-link-text ms-1">Student Documents</span>
+            <span class="nav-link-text ms-1">ASDASDASDASD</span>
         </a>
       </li>
       @endif
@@ -137,10 +137,12 @@
               </g>
             </svg>
           </div>
-          <span class="nav-link-text ms-1">Billing</span>
+          <span class="nav-link-text ms-1">Orders</span>
         </a>
       </li>
       @endif
+
+      
 
       <li class="nav-item mt-3">
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account</h6>

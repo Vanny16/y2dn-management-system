@@ -13,7 +13,7 @@
                         <div>
                             <h5 class="mb-0">Products</h5>
                         </div>
-                        <a href="/add_products" class="btn bg-gradient-primary btn-sm mb-0" type="button">+&nbsp;
+                        <a href="/add_products" class="btn bg-gradient-success btn-sm mb-0" type="button">+&nbsp;
                             Add Products</a>
                     </div>
                     @if(session('success'))
@@ -85,7 +85,7 @@
                                     </td>
 
                                     <td style="text-align:center">
-                                        <a class="btn btn-primary btn-sm view-btn text-white" data-toggle="modal"
+                                        <a class="btn btn-success btn-sm view-btn text-white" data-toggle="modal"
                                             data-target="#viewStudentModal{{ $prod_details->product_id }}">
                                             <i class="fas fa-eye"></i>
                                         </a>
@@ -112,7 +112,7 @@
                                     <div class="modal-dialog modal-dialog-centered modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="viewStudentModalLabel">Student Information
+                                                <h5 class="modal-title" id="viewStudentModalLabel">Product Information
                                                 </h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>

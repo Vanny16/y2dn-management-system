@@ -67,7 +67,7 @@
                             <!-- Third Column - Middle Name -->
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="middle-name" class="form-control-label">{{ __('QuantityOnHand') }}</label>
+                                    <label for="middle-name" class="form-control-label">{{ __('Stock Quantity') }}</label>
                                     <div class="@error('quantitystock') border border-danger rounded-3 @enderror">
                                         <input class="form-control" type="text" placeholder="Stock Quantity"
                                             id="quantitystock" name="quantitystock" required>
@@ -109,7 +109,7 @@
                                 <div class="form-group">
                                     <label for="first-name" class="form-control-label">{{ __('Discount') }}</label>
                                     <div class="@error('discount') border border-danger rounded-3 @enderror">
-                                        <input class="form-control" type="text" placeholder="First Name" id="first-name"
+                                        <input class="form-control" type="text" placeholder="Enter Discount" id="first-name"
                                             name="discount" required>
                                         @error('discount')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
