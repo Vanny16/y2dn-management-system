@@ -512,7 +512,7 @@ public function view_products()
 
 public function save_product(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         // Validate the request data
         $request->validate([
             'product_name' => 'required',

@@ -21,13 +21,9 @@ class SessionsController extends Controller
         $attributes = request()->validate([
             'email' => 'required|email',
             'password' => 'required',
-            'g-recaptcha-response' => 'required|captcha',
-        ], [
-            'g-recaptcha-response.required' => 'Please complete the captcha validation.',
-            'g-recaptcha-response.captcha' => 'Captcha validation failed, please try again.',
         ]);
 
-        unset($attributes['g-recaptcha-response']);
+        unset($attributes);
 
         if (Auth::attempt($attributes)) {
             session()->regenerate();
