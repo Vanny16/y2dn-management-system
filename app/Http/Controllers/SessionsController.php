@@ -23,7 +23,7 @@ class SessionsController extends Controller
             'password' => 'required',
         ]);
 
-        unset($attributes);
+        // unset($attributes);
 
         if (Auth::attempt($attributes)) {
             session()->regenerate();

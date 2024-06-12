@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DatabaseController;
+use App\Http\Controllers\ReportController;
+
 
 
 
@@ -63,6 +65,10 @@ Route::group(['middleware' => 'auth'], function () {
 	//Route::get('static-sign-up', function () {
 	//	return view('static-sign-up');
 	//})->name('sign-up');
+
+	Route::get('/report-main', [ReportController::class, 'main'])->name('report.main');
+	Route::post('/save_report', [ReportController::class, 'save_report'])->name('report.save');
+
 
 	Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/add_products', [InfoUserController::class, 'add_products']);

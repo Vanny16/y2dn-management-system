@@ -33,6 +33,19 @@
       </li>
       @endif
 
+      <li class="nav-item mt-2">
+        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Report</h6>
+      </li>
+
+      <li class="nav-item pb-2">
+        <a class="nav-link {{ (Request::is('report-main') ? 'active' : '') }}" href="{{ route('report.main') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('report-main') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+            </div>
+            <span class="nav-link-text ms-1">Add Report</span>
+        </a>
+      </li>
+
       @if(auth()->user()->user_role == 1 || auth()->user()->user_role == 2)
       <li class="nav-item mt-2">
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Products</h6>
@@ -68,14 +81,7 @@
         </a>
       </li>
 
-      <li class="nav-item pb-2">
-        <a class="nav-link {{ (Request::is('add_products') ? 'active' : '') }}" href="{{ url('add_products') }}">
-            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('add_products') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
-            </div>
-            <span class="nav-link-text ms-1">Add Report</span>
-        </a>
-      </li>
+
       @endif
 
 
